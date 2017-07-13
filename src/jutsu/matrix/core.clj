@@ -10,10 +10,20 @@
 ;;ND4J static methods
 (defn zeros [rows cols] (Nd4j/zeros rows cols))
 
+(defn jutsu-rows [coll]
+  (if (instance? INDArray coll)
+    (first (.shape coll))
+    (if (coll? (first coll)) (count coll) 1)))
+
+(defn jutsu-cols [coll]
+  (if (instance? INDArray coll)
+    (second (.shape coll))
+    (if (coll? (first coll)) (count (first coll)) (count coll))))
+
 (defn matrix
   "Converts clojure data to a ND4J array. Currently only supports 1 and 2 dimensional arrays."
   [coll]
-  (let [h (rows coll) w (cols coll)]
+  (let [h (jutsu-rows coll) w (jutsu-cols coll)]
     (if (= h 1)
       (Nd4j/create (float-array (seq coll)))
       (let [new-array (Nd4j/create h w)]
@@ -27,15 +37,13 @@
 
 (defn from-byte-array [byte-array] (Nd4j/fromByteArray byte-array))
 
-(defn clear-nans [ndarray] (Nd4j/clearNans ndarrays))
+(defn clear-nans [ndarray] (Nd4j/clearNans ndarray))
 
 (defn get-backend [] (Nd4j/getBackend))
 
-(def get-compressor [] (Nd4j/getCompressor))
+(defn get-compressor [] (Nd4j/getCompressor))
 
-(def get-fft [] (Nd4j/getFFt))
-
-(defn init-context [] (Nd4j/initContext))
+(defn get-fft [] (Nd4j/getFFt))
 
 (defn fallback-mode-enabled? [] (Nd4j/isFallbackModeEnabled))
 
@@ -76,17 +84,15 @@
 
 (defn sort-rows [ndarray col-idx ascending] (Nd4j/sortRows ndarray col-idx ascending))
 
-(defn sort-with-indices [ndarray dimension ascending] (Nd4j/sort-with-indices ndarray dimension ascending))
+(defn sort-with-indices [ndarray dimension ascending] (Nd4j/sortWithIndices ndarray dimension ascending))
 
 (defn sum 
   ([ndarray] (Nd4j/sum ndarray))
   ([ndarray dimension] (Nd4j/sum ndarray dimension)))
 
-(defn tensor-mul [ndarray ndarray2 axes] (Nd4j/ndarray ndarray axes))
-
 (defn to-byte-array [ndarray] (Nd4j/toByteArray ndarray))
 
-(defn to-flatten [ndarrays] (nd4j/toFlattened ndarrays))
+(defn to-flatten [ndarrays] (Nd4j/toFlattened ndarrays))
 
 (defn value-array-of
   ([shape value] (Nd4j/valueArrayOf shape value))
@@ -119,122 +125,122 @@
 
 (defn and [x y] (Transforms/and x y))
 
-(defn acos [ndarray] (Transform/acos ndarray true))
+(defn acos [ndarray] (Transforms/acos ndarray true))
 
-(defn acos! [ndarray] (Transform/acos ndarray false))
+(defn acos! [ndarray] (Transforms/acos ndarray false))
 
-(defn asin [ndarray] (Transform/asin ndarray true))
+(defn asin [ndarray] (Transforms/asin ndarray true))
 
-(defn asin! [ndarray] (Transform/asin ndarray false))
+(defn asin! [ndarray] (Transforms/asin ndarray false))
 
-(defn atan [ndarray] (Transform/atan ndarray true))
+(defn atan [ndarray] (Transforms/atan ndarray true))
 
-(defn atan! [ndarray] (Transform/atan ndarray false))
+(defn atan! [ndarray] (Transforms/atan ndarray false))
 
-(defn ceil [ndarray] (Transform/ceil ndarray true))
+(defn ceil [ndarray] (Transforms/ceil ndarray true))
 
-(defn ceil! [ndarray] (Transform/ceil ndarray false))
+(defn ceil! [ndarray] (Transforms/ceil ndarray false))
 
-(defn ceiling [ndarray] (Transform/ceiling ndarray true))
+(defn ceiling [ndarray] (Transforms/ceiling ndarray true))
 
-(defn ceiling! [ndarray] (Transform/cos ndarray false))
+(defn ceiling! [ndarray] (Transforms/cos ndarray false))
 
-(defn cos [ndarray] (Transform/ceiling ndarray true))
+(defn cos [ndarray] (Transforms/ceiling ndarray true))
 
-(defn cos! [ndarray] (Transform/cos ndarray false))
+(defn cos! [ndarray] (Transforms/cos ndarray false))
 
-(defn cosine-sim [ndarray ndarray2] (Transfrom/cosineSim ndarray ndarray2))
+(defn cosine-sim [ndarray ndarray2] (Transforms/cosineSim ndarray ndarray2))
 
-(defn eps [ndarray] (Transform/eps ndarray true))
+(defn eps [ndarray] (Transforms/eps ndarray true))
 
-(defn eps! [ndarray] (Transform/eps ndarray false))
+(defn eps! [ndarray] (Transforms/eps ndarray false))
 
-(defn floor [ndarray] (Transform/floor ndarray true))
+(defn floor [ndarray] (Transforms/floor ndarray true))
 
-(defn floor! [ndarray] (Transform/floor ndarray false))
+(defn floor! [ndarray] (Transforms/floor ndarray false))
 
-(defn greater-than-or-equal [ndarray ndarray2] (Transform/greaterThanOrEqual ndarray ndarray2 true))
+(defn greater-than-or-equal [ndarray ndarray2] (Transforms/greaterThanOrEqual ndarray ndarray2 true))
 
-(defn greater-than-or-equal! [ndarray ndarray2] (Transform/greaterThanOrEqual ndarray ndarray2 false))
+(defn greater-than-or-equal! [ndarray ndarray2] (Transforms/greaterThanOrEqual ndarray ndarray2 false))
 
-(defn hard-tanh [ndarray] (Transform/hardTanh ndarray true))
+(defn hard-tanh [ndarray] (Transforms/hardTanh ndarray true))
 
-(defn hard-tanh! [ndarray] (Transform/hardTanh ndarray false))
+(defn hard-tanh! [ndarray] (Transforms/hardTanh ndarray false))
 
-(defn identity [ndarray] (Transform/identity ndarray true))
+(defn identity [ndarray] (Transforms/identity ndarray true))
 
-(defn identity! [ndarray] (Transform/identity ndarray false))
+(defn identity! [ndarray] (Transforms/identity ndarray false))
 
-(defn leakyRelu [ndarray] (Transform/leakyRelu ndarray true))
+(defn leakyRelu [ndarray] (Transforms/leakyRelu ndarray true))
 
-(defn leakyRelu! [ndarray] (Transform/leakyRelu ndarray false))
+(defn leakyRelu! [ndarray] (Transforms/leakyRelu ndarray false))
 
-(defn less-than-or-equal [ndarray ndarray2] (Transform/lessThanOrEqual ndarray ndarray2 true))
+(defn less-than-or-equal [ndarray ndarray2] (Transforms/lessThanOrEqual ndarray ndarray2 true))
 
-(defn less-than-or-equal! [ndarray ndarray2] (Transform/lessThanOrEqual ndarray ndarray2 false))
+(defn less-than-or-equal! [ndarray ndarray2] (Transforms/lessThanOrEqual ndarray ndarray2 false))
 
 (defn log 
-  ([ndarray] (Transform/log ndarray true))
-  ([ndarray base] (Transform/log ndarray base true)))
+  ([ndarray] (Transforms/log ndarray true))
+  ([ndarray base] (Transforms/log ndarray base true)))
 
 (defn log! 
-  ([ndarray] (Transform/log ndarray false))
-  ([ndarray base] (Transform/log ndarray base false)))
+  ([ndarray] (Transforms/log ndarray false))
+  ([ndarray base] (Transforms/log ndarray base false)))
 
 (defn manhattan-distance [ndarray ndarray2]
-  (Transform/manhattanDistance ndarray nndarray2))
+  (Transforms/manhattanDistance ndarray ndarray2))
 
 (defn max
   "k can also be second array"
-  ([ndarray k] (Transform/max ndarray k true)))
+  ([ndarray k] (Transforms/max ndarray k true)))
 
-(defn max! [ndarray k] (Transform/max ndarray k false))
+(defn max! [ndarray k] (Transforms/max ndarray k false))
 
-(defn min [ndarray k] (Transform/min ndarray k true))
+(defn min [ndarray k] (Transforms/min ndarray k true))
 
-(defn min! [ndarray k] (Transform/min ndarray k false))
+(defn min! [ndarray k] (Transforms/min ndarray k false))
 
-(defn neg [ndarray] (Transform/neg ndarray true))
+(defn neg [ndarray] (Transforms/neg ndarray true))
 
-(defn neg! [ndarray] (Transform/neg ndarray false))
+(defn neg! [ndarray] (Transforms/neg ndarray false))
 
-(defn default-normalize [ndarray] (Transform/normalizeZeroMeanAndUnitVariance ndarray))
+(defn default-normalize [ndarray] (Transforms/normalizeZeroMeanAndUnitVariance ndarray))
 
-(defn not [ndarray] (Transform/not ndarray))
+(defn not [ndarray] (Transforms/not ndarray))
 
-(defn or [ndarray ndarray2] (Transform/or ndarray ndarray2))
+(defn or [ndarray ndarray2] (Transforms/or ndarray ndarray2))
 
-(defn pow [ndarray power] (Transform/pow ndarray power true))
+(defn pow [ndarray power] (Transforms/pow ndarray power true))
 
-(defn pow! [ndarray power] (Transform/pow ndarray power false))
+(defn pow! [ndarray power] (Transforms/pow ndarray power false))
 
-(defn relu [ndarray] (Transform/relu ndarray true))
+(defn relu [ndarray] (Transforms/relu ndarray true))
 
-(defn relu! [ndarray] (Transform/relu ndarray false))
+(defn relu! [ndarray] (Transforms/relu ndarray false))
 
-(defn round [ndarray] (Transform/round ndarray true))
+(defn round [ndarray] (Transforms/round ndarray true))
 
-(defn round! [ndarray] (Transform/round ndarray false))
+(defn round! [ndarray] (Transforms/round ndarray false))
 
-(defn sign [ndarray] (Transform/sign ndarray true))
+(defn sign [ndarray] (Transforms/sign ndarray true))
 
-(defn sign! [ndarray] (Transform/sign ndarray false))
+(defn sign! [ndarray] (Transforms/sign ndarray false))
 
-(defn sin [ndarray] (Transform/sin ndarray true))
+(defn sin [ndarray] (Transforms/sin ndarray true))
 
-(defn sin! [ndarray] (Transform/sin ndarray false))
+(defn sin! [ndarray] (Transforms/sin ndarray false))
 
-(defn soft-plus [ndarray] (Transform/softPlus ndarray true))
+(defn soft-plus [ndarray] (Transforms/softPlus ndarray true))
 
-(defn soft-plus! [ndarray] (Transform/softPlus ndarray false))
+(defn soft-plus! [ndarray] (Transforms/softPlus ndarray false))
 
-(defn stabilize [ndarray k] (Transform/stabilize ndarray k true))
+(defn stabilize [ndarray k] (Transforms/stabilize ndarray k true))
 
-(defn stabilize! [ndarray k] (Transform/stabilize ndarray k false))
+(defn stabilize! [ndarray k] (Transforms/stabilize ndarray k false))
 
-(defn unit-vec [ndarray] (Transform/unitVec ndarray))
+(defn unit-vec [ndarray] (Transforms/unitVec ndarray))
 
-(defn xor [ndarray ndarray2] (Transform/xor ndarray ndarray2))
+(defn xor [ndarray ndarray2] (Transforms/xor ndarray ndarray2))
 
 ;;ND4j Methods
 (defn linear-view [ndarray] (.linearView ndarray))
@@ -502,7 +508,7 @@
 (defn transpose! [ndarray] (.transposei ndarray))
 
 (defn vector-along-dimension [ndarray index dimension]
-  (.vectorAlongDimension ndarray idnex dimension))
+  (.vectorAlongDimension ndarray index dimension))
 
 (defn vectors-along-dimension [ndarray dimension]
   (.vectorsAlongDimension ndarray dimension))

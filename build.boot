@@ -1,5 +1,5 @@
 (set-env!
-  :resource-paths #{"src"}
+  :resource-paths #{"src" "test"}
   :dependencies '[[org.clojure/clojure "1.8.0"]
                   [nightlight "1.7.0" :scope "test"]
                   [adzerk/boot-test "1.2.0" :scope "test"]
@@ -32,17 +32,18 @@
 
 (require
   '[nightlight.boot :refer [nightlight]]
-  '[adzerk.boot-test :refer :all])
+  '[adzerk.boot-test :refer :all]
+  'jutsu.matrix.test)
 
 (deftask night []
   (comp
     (wait)
     (nightlight :port 4000)))
 
-(deftask testing [] (merge-env! :source-paths #{"test"}) identity)
+(deftask testing [] (merge-env! :resource-paths #{"test"}) identity)
 
 (deftask test-code
   []
   (comp
-    (testing)
+    ;(testing)
     (test)))
