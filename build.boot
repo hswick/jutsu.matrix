@@ -12,10 +12,10 @@
 
 (task-options!
   jar {:main 'jutsu.matrix.core
-       :manifest {"Description" "Clojure library meant to do..."}}
+       :manifest {"Description" "jutsu.matrix is a linear algebra library meant for the jutsu data science framework"}}
   pom {:version "0.0.1"
        :project 'hswick/jutsu.matrix
-       :description "jutsu.matrix is meant to do..."
+       :description "jutsu.matrix is a linear algebra library meant for the jutsu data science framework"
        :url "https://github.com/hswick/jutsu.matrix"}
   push {:repo "clojars"})
 
