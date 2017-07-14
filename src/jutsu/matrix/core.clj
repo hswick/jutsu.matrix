@@ -204,7 +204,7 @@
 
 (defn neg! [ndarray] (Transforms/neg ndarray false))
 
-(defn default-normalize [ndarray] (Transforms/normalizeZeroMeanAndUnitVariance ndarray))
+(defn normalize! [ndarray] (Transforms/normalizeZeroMeanAndUnitVariance ndarray))
 
 (defn not [ndarray] (Transforms/not ndarray))
 
@@ -393,7 +393,7 @@
 
 (defn max-number [ndarray] (.maxNumber ndarray))
 
-(defn mean [ndarray] (.meanNumber ndarray))
+(defn mean-number [ndarray] (.meanNumber ndarray))
 
 (defn min-number [ndarray] (.minNumber ndarray))
 
@@ -513,6 +513,28 @@
 (defn vectors-along-dimension [ndarray dimension]
   (.vectorsAlongDimension ndarray dimension))
 
+
+;;Algorithms and other built formulas
+
+(defn mean [ndarray]
+  (let [shape (.shape ndarray)
+        nrows (first shape)
+        ncols (second shape)
+        new-array (Nd4j/zeros 1 ncols)]
+    (doseq [i (range nrows)]
+      (.addi new-array (.getRow ndarray i)))
+    new-array))
+
+(defn covariance [ndarray]
+    (let [average (mean ndarray)
+          shape (.shape ndarray)
+          sum (Nd4j/zeros (second shape) (second shape))]
+      (doseq [i (range 0 (first shape))]
+        (let [variance (.sub (.getRow ndarray i) average)
+              row-covar (.mmul (.transpose (.dup variance)) variance)]
+          (.addi sum row-covar)))         
+      (.div sum (first shape))))
+
 (defn svd-decomp [ndarray]
   (let [shape (.shape ndarray)
         rows (first shape)
@@ -522,3 +544,19 @@
     (.sgesvd (.lapack (Nd4j/getBlasWrapper))
       ndarray s nil vt)
     {:singularvalues s :eigenvectors_transposed vt}))
+
+(defn pca [num-dims ndarray]
+  (let [covar (covariance ndarray)
+        svd-comps (svd-decomp covar)
+        factors (->> (map-indexed (fn [i n] [n i]) (:singularvalues svd-comps))
+                     (sort-by first)
+                     reverse
+                     (take num-dims)
+                     (map (fn [[eigenvalue id]] (.getColumn (:eigenvectors_transposed svd-comps) id)))
+                     hstack-arrays)]
+    (.mmul ndarray factors)))
+
+(defn normalize-zero! [ndarray]
+  (let [mn (Nd4j/mean ndarray 0)]
+    (.subiRowVector ndarray mn)
+    ndarray))

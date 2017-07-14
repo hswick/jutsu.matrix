@@ -8,7 +8,14 @@ You can install this library from clojars:
 This primarily serves as a light wrapper around nd4j linalg module and provides basic linear algebra support to those using ND4J arrays.
 
 Most functions have been implemented. If for some reason you don't see a particular one feel free to submit a PR! :D
+
 # Usage
+
+```clojure
+
+```
+
+# Dev
 
 Run `boot night` to startup nightlight and begin editing your project in a browser.
 
