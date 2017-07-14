@@ -1,4 +1,4 @@
-(ns jutsu.matrix.core
+(ns jutsu.matrix.test
   (:require [clojure.test :refer :all]
             [jutsu.matrix.core :as jm]))
 
