@@ -513,9 +513,7 @@
 (defn vectors-along-dimension [ndarray dimension]
   (.vectorsAlongDimension ndarray dimension))
 
-
 ;;Algorithms and other built formulas
-
 (defn mean [ndarray]
   (let [shape (.shape ndarray)
         nrows (first shape)
