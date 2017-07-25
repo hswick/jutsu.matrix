@@ -541,16 +541,16 @@
         vt (Nd4j/create cols cols)]
     (.sgesvd (.lapack (Nd4j/getBlasWrapper))
       ndarray s nil vt)
-    {:singularvalues s :eigenvectors_transposed vt}))
+    {:singular-values s :eigenvectors-transposed vt}))
 
 (defn pca [num-dims ndarray]
   (let [covar (covariance ndarray)
         svd-comps (svd-decomp covar)
-        factors (->> (map-indexed (fn [i n] [n i]) (:singularvalues svd-comps))
+        factors (->> (map-indexed (fn [i n] [n i]) (:singular-values svd-comps))
                      (sort-by first)
                      reverse
                      (take num-dims)
-                     (map (fn [[eigenvalue id]] (.getColumn (:eigenvectors_transposed svd-comps) id)))
+                     (map (fn [[eigenvalue id]] (.getColumn (:eigenvectors-transposed svd-comps) id)))
                      hstack-arrays)]
     (.mmul ndarray factors)))
 
