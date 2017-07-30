@@ -10,6 +10,8 @@
 ;;ND4J static methods
 (defn zeros [rows cols] (Nd4j/zeros rows cols))
 
+(defn zero-vector [n] (Nd4j/zeros 1 n))
+
 (defn jutsu-rows [coll]
   (if (instance? INDArray coll)
     (first (.shape coll))
@@ -48,6 +50,8 @@
 (defn fallback-mode-enabled? [] (Nd4j/isFallbackModeEnabled))
 
 (defn ones [rows cols] (Nd4j/ones rows cols))
+
+(defn ones-vector [n] (Nd4j/ones 1 n))
 
 (defn prod 
   ([ndarray] (Nd4j/prod ndarray))
@@ -512,6 +516,22 @@
 
 (defn vectors-along-dimension [ndarray dimension]
   (.vectorsAlongDimension ndarray dimension))
+
+;;Stacks a collection of ndarrays vertically (by row)
+(defn vstack-arrays [ndarrays]
+  (let [shape (.shape (first ndarrays))
+        new-array (Nd4j/create (count ndarrays) (second shape))]
+    (doseq [n (range 0 (count ndarrays))]
+      (.putRow new-array n (nth ndarrays n)))
+    new-array))
+
+;;Stacks a collection of ndarrays horizontally
+(defn hstack-arrays [ndarrays]
+  (let [shape (.shape (first ndarrays))
+        new-array (Nd4j/create (first shape) (count ndarrays))]
+    (doseq [n (range 0 (count ndarrays))]
+      (.putColumn new-array n (nth ndarrays n)))
+    new-array))
 
 ;;Algorithms and other built formulas
 (defn mean [ndarray]
