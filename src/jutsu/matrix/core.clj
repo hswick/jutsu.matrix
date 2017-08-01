@@ -7,11 +7,6 @@
 ;;http://nd4j.org/doc/org/nd4j/linalg/api/ndarray/BaseNDArray.html
 ;;http://nd4j.org/doc/org/nd4j/linalg/factory/Nd4j.html
 
-;;ND4J static methods
-(defn zeros [rows cols] (Nd4j/zeros rows cols))
-
-(defn zero-vector [n] (Nd4j/zeros 1 n))
-
 (defn jutsu-rows [coll]
   (if (instance? INDArray coll)
     (first (.shape coll))
@@ -33,6 +28,11 @@
           (.putRow new-array i (Nd4j/create (float-array (nth coll i)))))
         new-array))))
 
+;;ND4J static methods
+(defn zeros
+  ([cols] (Nd4j/zeros cols))
+  ([rows cols] (Nd4j/zeros rows cols)))
+
 (defn diag
   ([ndarray] (Nd4j/diag ndarray))
   ([ndarray k] (Nd4j/diag ndarray k)))
@@ -49,9 +49,9 @@
 
 (defn fallback-mode-enabled? [] (Nd4j/isFallbackModeEnabled))
 
-(defn ones [rows cols] (Nd4j/ones rows cols))
-
-(defn ones-vector [n] (Nd4j/ones 1 n))
+(defn ones 
+  ([cols] (Nd4j/ones cols))
+  ([rows cols] (Nd4j/ones rows cols)))
 
 (defn prod 
   ([ndarray] (Nd4j/prod ndarray))
@@ -105,6 +105,139 @@
 (defn var
   ([ndarray] (Nd4j/var ndarray))
   ([ndarray dimension] (Nd4j/var ndarray dimension)))
+
+(defn allows-specify-ordering? []
+  (Nd4j/allowsSpecifyOrdering))
+
+(defn append [arr pad-amount val axis]
+  (Nd4j/append arr pad-amount val axis))
+
+(defn arange
+  ([end] (Nd4j/arange end))
+  ([begin end] (Nd4j/arange begin end)))
+
+(defn average-and-propagate
+  ([arrays] (Nd4j/averageAndPropagate arrays))
+  ([target arrays] (Nd4j/averageAndPropagate target arrays)))
+
+(defn bilinear-products [curr in]
+  (Nd4j/bilinearProducts curr in))
+
+(defn buffer-ref-queue []
+  (Nd4j/bufferRefQueue))
+
+(defn choice
+  ([source probs num-samples] (Nd4j/choice source probs num-samples))
+  ([source probs num-samples rng] (Nd4j/choice source probs num-samples rng)))
+
+(defn concat [dimension & args] (Nd4j/concat dimension (into-array args)))
+
+(defn data-type [] (Nd4j/dataType))
+
+(defn empty-like [arr] (Nd4j/emptyLike arr))
+
+(defn enable-fallback-mode! [really-enable] (Nd4j/enableFallbackMode really-enable))
+
+(defn eye [n] (Nd4j/eye n))
+
+(defn factory [] (Nd4j/factory))
+
+(defn get-affinity-manager [] (Nd4j/getAffinityManager))
+
+(defn get-constnat-handler [] (Nd4j/getConstantHandler))
+
+(defn get-convolution [] (Nd4j/getConvolution))
+
+(defn get-data-buffer-factory [] (Nd4j/getDataBufferFactory))
+
+(defn get-distributions [] (Nd4j/getDistributions))
+
+(defn get-instrumentation [] (Nd4j/getInstrumentation))
+
+(defn get-memory-manager [] (Nd4j/getMemoryManager))
+
+(defn get-ndarray-factory [] (Nd4j/getNDArrayFactory))
+
+(defn get-op-factory [] (Nd4j/getOpFactory))
+
+(defn get-random [] (Nd4j/getRandom))
+
+(defn get-random-factory [] (Nd4j/getRandomFactory))
+
+(defn get-strides
+  ([shape] (Nd4j/getStrides shape))
+  ([shape order] (Nd4j/getStrides shape order)))
+
+(defn hstack
+  ([arr & args] (Nd4j/hstack (into-array args))))
+
+(defn ones-like [arr] (Nd4j/onesLike arr))
+
+(defn pad
+  ([to-pad pad-width pad-mode] (Nd4j/pad to-pad pad-width pad-mode))
+  ([to-pad pad-width constant-values pad-mode]
+   (Nd4j/pad to-pad pad-width constant-values pad-mode)))
+
+(defn prepend [arr pad-amount val axis] (Nd4j/prepend arr pad-amount val axis))
+
+(defn pull-rows
+  ([source source-dim indexes] (Nd4j/pullRows source source-dim indexes))
+  ([source source-dim indexes order] (Nd4j/pullRows source source-dim indexes order)))
+
+(defn read-binary [read-file] (Nd4j/readBinary read-file))
+
+(defn read [input] (Nd4j/read input))
+
+(defn read-numpy
+  ([file-path] (Nd4j/readNumpy file-path))
+  ([file-path split] (Nd4j/readNumpy file-path split)))
+
+(defn read-txt
+  ([file-path] (Nd4j/readTxt file-path))
+  ([file-path sep] (Nd4j/readTxt file-path sep)))
+
+(defn read-txt-string
+  ([ndarray] (Nd4j/readTxtString ndarray))
+  ([ndarray sep] (Nd4j/readTxtString ndarray sep)))
+
+(defn ref-queue [] (Nd4j/refQueue))
+
+(defn jutsu-reverse [arr] (Nd4j/reverse arr))
+
+(defn save-binary [arr save-to] (Nd4j/saveBinary arr save-to))
+
+(defn scalar
+  ([value] (Nd4j/scalar value))
+  ([value offset] (Nd4j/scalar value offset)))
+
+(defn set-data-type! [dtype] (Nd4j/setDataType dtype))
+
+(defn shape [arr] (Nd4j/shape arr))
+
+(defn shuffle
+  ([to-shuffle & args] (Nd4j/shuffle to-shuffle (into-array args))))
+
+(defn size-of-data-type []
+  (Nd4j/sizeOfDataType))
+
+(defn vstack
+  ([& args] (Nd4j/vstack (into-array args))))
+
+(defn write [arr output-stream] (Nd4j/write arr output-stream))
+
+(defn write-numpy [write file-path split] (Nd4j/writeNumpy write file-path split))
+
+(defn write-txt 
+  ([write file-path] (Nd4j/writeTxt write file-path))
+  ([write file-path split] (Nd4j/writeTxt write file-path split))
+  ([write file-path split precision] (Nd4j/writeTxt write file-path split precision)))
+
+(defn write-txt-string
+  ([write os] (Nd4j/writeTxtString write os))
+  ([write os split] (Nd4j/writeTxtString write os split))
+  ([write os split precision] (Nd4j/writeTxtString write os split precision)))
+
+(defn zeros-like [arr] (Nd4j/zerosLike arr))
 
 ;;Transform static methods
 (defn abs [ndarray] (Transforms/abs ndarray true))
@@ -518,6 +651,7 @@
   (.vectorsAlongDimension ndarray dimension))
 
 ;;Stacks a collection of ndarrays vertically (by row)
+;;Doesn't work if >2 X N, only 1 X N
 (defn vstack-arrays [ndarrays]
   (let [shape (.shape (first ndarrays))
         new-array (Nd4j/create (count ndarrays) (second shape))]

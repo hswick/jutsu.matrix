@@ -14,4 +14,9 @@
            (jm/matrix [[1 2 3] [1 2 3]])
            (jm/matrix [[3 2 1] [3 2 1]])))
 
-(println (jm/add! (jm/zeros 1 4) (jm/matrix [1 2 3 4])))
+(println (jm/add! (jm/zeros 1 4) (jm/matrix [5 6 4 9])))
+
+(println (jm/concat 0 (jm/matrix [1 2 3 4]) (jm/matrix [4 3 2 1])))
+
+(println (jm/vstack (jm/matrix [[1 2 3 4] [4 3 2 1]]) (jm/matrix [1 2 3 4])))
+
