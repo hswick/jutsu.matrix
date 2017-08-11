@@ -614,7 +614,7 @@
   ([ndarray s] (.slice ndarray s))
   ([ndarray s dimension] (.slice ndarray s dimension)))
 
-(defn slices [ndarray] (.slice ndarray))
+(defn slices [ndarray] (.slices ndarray))
 
 (defn squared-distance [ndarray ndarray2] (.squaredDistance ndarray ndarray2))
 
