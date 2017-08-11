@@ -44,4 +44,6 @@
   (is (jm/equals? (jm/matrix [[1 2 3 4] [4 3 2 1]])
         (jm/vstack (jm/matrix [1 2 3 4]) (jm/matrix [4 3 2 1])))))
 
+(println (jm/shape test-m1))
+
 
