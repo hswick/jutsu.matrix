@@ -27,6 +27,13 @@ Most functions have been implemented. If for some reason you don't see a particu
 (println (jm/transpose m1))
 
 (println (jm/mmul m1 (jm/transpose m2)))
+
+(jm/write-txt m1 "matrix1.txt")
+
+(def m3 (jm/read-txt "matrix1.txt"))
+
+(jm/equals? m3 m1)
+;;=>true
 ```
 
 # Why not core.matrix?
