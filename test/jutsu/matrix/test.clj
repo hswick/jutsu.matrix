@@ -44,6 +44,10 @@
   (is (jm/equals? (jm/matrix [[1 2 3 4] [4 3 2 1]])
         (jm/vstack (jm/matrix [1 2 3 4]) (jm/matrix [4 3 2 1])))))
 
-(println (jm/shape test-m1))
+(deftest shape
+  (is (= [2 4] (jm/shape test-m1))))
 
+(deftest write-and-read
+  (jm/write-txt test-m1 "test-m1.txt")
+  (is (jm/equals? test-m1 (jm/read-txt "test-m1.txt"))))
 

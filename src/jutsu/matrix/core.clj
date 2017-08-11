@@ -212,7 +212,8 @@
 
 (defn set-data-type! [dtype] (Nd4j/setDataType dtype))
 
-(defn shape [arr] (Nd4j/shape arr))
+(defn shape [arr] 
+  (into [] (Nd4j/shape arr)))
 
 (defn shuffle
   ([to-shuffle & args] (Nd4j/shuffle to-shuffle (into-array args))))

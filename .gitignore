@@ -6,3 +6,4 @@ pom.xml.asc
 /target/
 /checkouts/
 .nightlight.edn
+test-m1.txt
