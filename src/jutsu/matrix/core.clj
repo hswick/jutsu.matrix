@@ -713,3 +713,9 @@
   (let [mn (Nd4j/mean ndarray 0)]
     (.subiRowVector ndarray mn)
     ndarray))
+
+(defn get-max-index [ndarray]
+  (last (sort-by second (map-indexed (fn [i n] [n i]) ndarray))))
+
+(defn get-min-index [ndarray]
+  (first (sort-by second (map-indexed (fn [i n] [n i]) ndarray))))
