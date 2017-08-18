@@ -17,7 +17,7 @@
     (second (.shape coll))
     (if (coll? (first coll)) (count (first coll)) (count coll))))
 
-(defn matrix
+(defn matrix 
   "Converts clojure data to a ND4J array. Currently only supports 1 and 2 dimensional arrays."
   [coll]
   (let [h (jutsu-rows coll) w (jutsu-cols coll)]
@@ -719,3 +719,10 @@
 
 (defn get-min-index [ndarray]
   (first (sort-by second (map-indexed (fn [i n] [n i]) ndarray))))
+
+;;Should this return a value or an array?
+(defn inner-product [a1 a2]
+  (mmul a1 (transpose a2)))
+
+(defn outer-product [a1 a2]
+  (mmul (transpose a1) a2))

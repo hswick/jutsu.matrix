@@ -51,3 +51,38 @@
   (jm/write-txt test-m1 "test-m1.txt")
   (is (jm/equals? test-m1 (jm/read-txt "test-m1.txt"))))
 
+(deftest subtraction
+  (let [matrix-2s (jm/matrix [[2 2 2]
+                              [2 2 2]])
+        matrix-neg2s (jm/matrix [[-2 -2 -2]
+                                 [-2 -2 -2]])
+        zeros-2s (jm/zeros 2 3)]
+    (is (jm/equals? matrix-neg2s (jm/sub zeros-2s matrix-2s)))
+    (jm/sub! zeros-2s matrix-2s)
+    (is (jm/equals? matrix-neg2s zeros-2s))))
+
+(deftest matrix-mul
+  (let [a1 (jm/matrix [1 2 3 4])
+        a2 (jm/matrix [6 7 4 3])]
+    (is (= [1 1] (jm/shape (jm/mmul a1 (jm/transpose a2)))))
+    (is (= [1 1] (jm/shape (jm/inner-product a1 a2))))
+    (is (= (jm/mmul a1 (jm/transpose a2)) (jm/inner-product a1 a2)))
+    (is (= (jm/mmul (jm/transpose a1) a2) (jm/outer-product a1 a2)))
+    (is (= [4 4] (jm/shape (jm/outer-product a1 a2))))))
+
+(deftest sum-test
+  (let [a1 (jm/matrix [1 2 3 4])
+        a2 (jm/matrix [6 7 4 3])]
+    (is (= [1 1] (jm/shape (jm/sum a1))))
+    (is (= [1 1] (jm/shape (jm/sum (jm/matrix [[1 2 3 4] [1 2 3 4] [1 2 3 4] [1 2 3 4]])))))))
+
+(deftest min-max
+  (let [a1 (jm/matrix [1 2 3 4])]
+    (is (= 4.0 (jm/max-number a1)))
+    (is (= 1.0 (jm/min-number a1)))
+    (is (= 2.5 (jm/mean-number a1)))))
+
+(deftest keep-min-max 
+  (let [a1 (jm/matrix [1 2 3 4]) a2 (jm/matrix [4 5 6 1])]
+    (is (= (jm/matrix [4 5 6 4]) (jm/max a1 a2)))
+    (is (= (jm/matrix [1 2 3 1]) (jm/min a1 a2)))))
