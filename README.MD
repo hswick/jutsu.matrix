@@ -9,6 +9,9 @@ You can install this library from clojars:
 This primarily serves as a light wrapper around nd4j linalg module and provides basic linear algebra support to those using ND4J arrays.
 Names of functions can be assumed to be similar to the original nd4j library but with clojure naming conventions.
 
+Library mostly designed to help work with deeplearning4j with an added side bonus of a fast linear algebra library for clojure
+that works on the CPU and GPU.
+
 Most functions from nd4j have been implemented. If for some reason you don't see a particular one feel free to submit a PR! :D
 
 # Usage
