@@ -4,12 +4,12 @@ Use at your own risk! API subject to change.
 
 You can install this library from clojars:
 ```clojure
-[hswick/jutsu.matrix "0.0.4"]
+[hswick/jutsu.matrix "0.0.7"]
 ```
 This primarily serves as a light wrapper around nd4j linalg module and provides basic linear algebra support to those using ND4J arrays.
 Names of functions can be assumed to be similar to the original nd4j library but with clojure naming conventions.
 
-Most functions have been implemented. If for some reason you don't see a particular one feel free to submit a PR! :D
+Most functions from nd4j have been implemented. If for some reason you don't see a particular one feel free to submit a PR! :D
 
 # Usage
 
@@ -34,6 +34,24 @@ Most functions have been implemented. If for some reason you don't see a particu
 
 (jm/equals? m3 m1)
 ;;=>true
+
+;;Can create single row arrays with this syntax
+(def m4 (jm/matrix 1 2 3 4))
+
+(= (jm/mul m4 2) (jm/matrix [2 4 6 8]))
+;;=> true
+
+(= (jm/pow m4 2) (jm/matrix 1 4 9 16))
+;;=> true
+
+(jm/max-index (jm/matrix 1 2 3 4))
+;;=>[4.0 3]
+
+(jm/min-index (jm/matrix 1 2 3 4))
+;;=>[1.0 0]
+
+(jm/shape (jm/matrix [[1 2 3 4] [1 2 3 4]]))
+;;=>[2 4]
 ```
 
 # Why not core.matrix?
@@ -45,7 +63,14 @@ because nd4j does not support 0 dimension arrays. This means you can't actually 
 The second reason is that nd4j works as a protocol/interface because it has multiple backends for cpu and gpu. For me those are the only backends I need to switch out.
 Personally, using multiple cpu libraries seems like added complexity. This means nd4j provides all the benefits of a protocol like core.matrix. 
 
-Thus means following the core.matrix protocol is not a priority of mine. 
+Thus following the core.matrix protocol is not a priority of mine.
+
+# FYI
+
+Where names from nd4j conflict with clojure core names I usually attached an -array to the end
+of the name to signify such an action was taking place on an NDArray.
+
+Like reverse is reverse-array, or identity is identity-array.
 # Dev
 
 Run `boot night` to startup nightlight and begin editing your project in a browser.
