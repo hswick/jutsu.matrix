@@ -134,3 +134,23 @@
 (deftest max-min-indices
   (is (= [4.0 0] (jm/max-index (jm/matrix 4 3 2 1))))
   (is (= [1.0 3] (jm/min-index (jm/matrix 4 3 2 1)))))
+
+(deftest mul-test
+  (is (= (jm/matrix 2 4 6 8) (jm/mul (jm/matrix 1 2 3 4) 2)))
+  (is (= (jm/matrix 4 4 4 4) (jm/mul 
+                               (jm/matrix 2 2 2 2)
+                               (jm/matrix 2 2 2 2))))
+  (let [m1 (jm/matrix 1 2 3 4)]
+    (jm/mul! m1 2)
+    (is (= (jm/matrix 2 4 6 8) m1))))
+
+(deftest rows-cols
+  (is (= 1 (jm/rows (jm/matrix 1 2 3 4))))
+  (is (= 4 (jm/columns (jm/matrix 1 2 3 4))))
+  (is (= (jm/rows (jm/matrix 1 2 3 4)) (jm/num-rows [1 2 3 4])))
+  (is (= (jm/columns (jm/matrix 1 2 3 4)) (jm/num-cols [1 2 3 4])))
+  (is (= (jm/rows (jm/matrix 1 2 3 4)) (jm/num-rows (jm/matrix 1 2 3 4))))
+  (is (= (jm/columns (jm/matrix 1 2 3 4)) (jm/num-cols (jm/matrix 1 2 3 4)))))
+
+(deftest squared-sqrt
+  (is (= (jm/matrix 1 4 9 16) (jm/pow (jm/matrix 1 2 3 4) 2))))

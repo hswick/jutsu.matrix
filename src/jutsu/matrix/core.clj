@@ -632,6 +632,10 @@
 
 (defn std-number [ndarray] (.stdNumber ndarray))
 
+(defn mul [ndarray ndarray2] (.mul ndarray ndarray2))
+
+(defn mul! [ndarray ndarray2] (.muli ndarray ndarray2))
+
 (defn stride
   ([ndarray] (.stride ndarray))
   ([ndarray dimension] (.stride ndarray dimension)))
@@ -736,8 +740,12 @@
   (last (sort-by second (map-indexed (fn [i n] [n i]) ndarray))))
 
 ;;Should this return a value or an array?
-(defn inner-product [a1 a2]
+(defn inner-product
+  "Takes two arrays and then returns a value as the inner product. Smaller shape."
+  [a1 a2]
   (mmul a1 (transpose a2)))
 
-(defn outer-product [a1 a2]
+(defn outer-product
+  "Takes two arrays and then returns an array with a larger shape."
+  [a1 a2]
   (mmul (transpose a1) a2))
