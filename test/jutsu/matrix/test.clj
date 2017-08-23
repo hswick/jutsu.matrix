@@ -3,7 +3,8 @@
             [jutsu.matrix.core :as jm]))
 
 (deftest clj->nd4j
-  (is (= org.nd4j.linalg.cpu.nativecpu.NDArray (class (jm/matrix [[1 2 3 4] [1 2 3 4]])))))
+  (is (= org.nd4j.linalg.cpu.nativecpu.NDArray (class (jm/matrix [[1 2 3 4] [1 2 3 4]]))))
+  (is (= (jm/matrix [1 2 3 4]) (jm/matrix 1 2 3 4))))
 
 (def test-m1 (jm/matrix [[1 2 3 4] [4 3 2 1]]))
 (def test-m2 (jm/matrix [[1 2 3 4] [4 3 2 1]]))
@@ -34,9 +35,9 @@
 (deftest to-string
   (is (= "[1.00, 3.00, 4.00]" (jm/to-string (jm/matrix [1 3 4])))))
 
-(deftest concat
+(deftest concatenation
   (is (jm/equals? (jm/matrix [[1 2 3 4] [4 3 2 1]])
-        (jm/concat 0 (jm/matrix [1 2 3 4]) (jm/matrix [4 3 2 1])))))
+        (jm/concat-arrays 0 (jm/matrix [1 2 3 4]) (jm/matrix [4 3 2 1])))))
 
 (deftest vstack
   (is (jm/equals? (jm/matrix [[1 2 3 4] [4 3 2 1] [1 5 3 5]])
@@ -76,13 +77,60 @@
     (is (= [1 1] (jm/shape (jm/sum a1))))
     (is (= [1 1] (jm/shape (jm/sum (jm/matrix [[1 2 3 4] [1 2 3 4] [1 2 3 4] [1 2 3 4]])))))))
 
-(deftest min-max
+(deftest min-max-num
   (let [a1 (jm/matrix [1 2 3 4])]
-    (is (= 4.0 (jm/max-number a1)))
-    (is (= 1.0 (jm/min-number a1)))
-    (is (= 2.5 (jm/mean-number a1)))))
+    (is (= 4.0 (jm/max-num a1)))
+    (is (= 1.0 (jm/min-num a1)))
+    (is (= 2.5 (jm/mean-num a1)))))
 
 (deftest keep-min-max 
   (let [a1 (jm/matrix [1 2 3 4]) a2 (jm/matrix [4 5 6 1])]
-    (is (= (jm/matrix [4 5 6 4]) (jm/max a1 a2)))
-    (is (= (jm/matrix [1 2 3 1]) (jm/min a1 a2)))))
+    (is (= (jm/matrix [4 5 6 4]) (jm/keep-max a1 a2)))
+    (is (= (jm/matrix [1 2 3 1]) (jm/keep-min a1 a2)))))
+
+(deftest division
+  (let [a1 (jm/matrix [4 4 4 4]) a2 (jm/matrix [2 2 2 2])]
+    (is (= a2 (jm/div a1 2)))
+    (is (= a2 (jm/div a1 a2)))
+    (jm/div! a1 2)
+    (is (= a2 a1))))
+
+;;Basic = assertion doesn't seem to work because of different internal arrays
+;;in memory.
+;;Okay so the shape of these repeated arrays is rather wonky
+(deftest repeat-test
+  (is (= [2 1 4]
+         (jm/shape (jm/repeat-array (jm/matrix [1 2 3 4]) 2)))))
+
+(deftest create
+  (is (= [4 3] (jm/shape (jm/create 4 3)))))
+
+(deftest reverse-array
+  (is (= (jm/matrix 1 2 3 4) (jm/reverse-array (jm/matrix 4 3 2 1))))
+  (is (= (jm/matrix [[10 6 5 4]
+                     [1 2 3 4]
+                     [8 7 6 5]
+                     [4 3 2 1]])
+         (jm/reverse-array (jm/matrix [[1 2 3 4]
+                                       [5 6 7 8]
+                                       [4 3 2 1]
+                                       [4 5 6 10]])))))
+
+(deftest transpose
+  (is (= [4 1] (jm/shape (jm/transpose (jm/matrix 1 2 3 4))))))
+
+(deftest inner-product
+  (is (= [1 1] (jm/shape (jm/inner-product (jm/matrix 1 2 3 4) (jm/matrix 1 2 3 4)))))
+  (is (= (jm/mmul (jm/matrix 1 2 3 4)
+           (jm/transpose (jm/matrix 1 2 3 4)))
+         (jm/inner-product (jm/matrix 1 2 3 4) (jm/matrix 1 2 3 4)))))
+
+(deftest outer-product
+  (is (= [4 4] (jm/shape (jm/outer-product (jm/matrix 1 2 3 4) (jm/matrix 1 2 3 4)))))
+  (is (= (jm/mmul (jm/transpose (jm/matrix 1 2 3 4))
+                  (jm/matrix 1 2 3 4))
+         (jm/outer-product (jm/matrix 1 2 3 4) (jm/matrix 1 2 3 4)))))
+
+(deftest max-min-indices
+  (is (= [4.0 0] (jm/max-index (jm/matrix 4 3 2 1))))
+  (is (= [1.0 3] (jm/min-index (jm/matrix 4 3 2 1)))))

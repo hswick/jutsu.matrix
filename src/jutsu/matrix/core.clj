@@ -7,29 +7,34 @@
 ;;http://nd4j.org/doc/org/nd4j/linalg/api/ndarray/BaseNDArray.html
 ;;http://nd4j.org/doc/org/nd4j/linalg/factory/Nd4j.html
 
-(defn jutsu-rows [coll]
+(defn num-rows [coll]
   (if (instance? INDArray coll)
     (first (.shape coll))
     (if (coll? (first coll)) (count coll) 1)))
 
-(defn jutsu-cols [coll]
+(defn num-cols [coll]
   (if (instance? INDArray coll)
     (second (.shape coll))
     (if (coll? (first coll)) (count (first coll)) (count coll))))
 
 (defn matrix 
   "Converts clojure data to a ND4J array. Currently only supports 1 and 2 dimensional arrays."
-  [coll]
-  (let [h (jutsu-rows coll) w (jutsu-cols coll)]
+  ([coll]
+   (let [h (num-rows coll) w (num-cols coll)]
     (if (= h 1)
       (Nd4j/create (float-array (seq coll)))
       (let [new-array (Nd4j/create h w)]
         (doseq [i (range 0 h)]
           (.putRow new-array i (Nd4j/create (float-array (nth coll i)))))
         new-array))))
+  ([n & args] (matrix (cons n args))))
+
+(defn create [rows cols]
+  (Nd4j/create rows cols))
 
 ;;ND4J static methods
 (defn zeros
+  "Returns an array full of zeros based on number(s) given"
   ([cols] (Nd4j/zeros cols))
   ([rows cols] (Nd4j/zeros rows cols)))
 
@@ -49,7 +54,8 @@
 
 (defn fallback-mode-enabled? [] (Nd4j/isFallbackModeEnabled))
 
-(defn ones 
+(defn ones
+  "Returns an array full of ones based on number(s) given"
   ([cols] (Nd4j/ones cols))
   ([rows cols] (Nd4j/ones rows cols)))
 
@@ -57,18 +63,20 @@
   ([ndarray] (Nd4j/prod ndarray))
   ([ndarray k] (Nd4j/prod ndarray k)))
 
-(defn rand 
+(defn rand-array
   ([shape] (Nd4j/rand shape))
   ([rows cols] (Nd4j/rand cols))
   ([rows cols seed] (Nd4j/rand cols))
   ([rows cols min max rng] (Nd4j/rand cols min max rng)))
 
-(defn randn
+(defn randn-array
   ([shape] (Nd4j/randn shape))
   ([rows columns] (Nd4j/randn rows columns))
   ([rows columns rng] (Nd4j/randn rows columns rng)))
 
-(defn repeat [ndarray num] (Nd4j/repeat ndarray num))
+(defn repeat-array
+  "Repeats the input array n times to create a new larger array."
+  [ndarray n] (Nd4j/repeat ndarray n))
 
 (defn roll-axis 
   ([ndarray axis] (Nd4j/rollAxis ndarray axis))
@@ -82,7 +90,7 @@
   ([value] (Nd4j/scalar value))
   ([value offset] (Nd4j/scalar value offset)))
 
-(defn sort [ndarray dimension ascending] (Nd4j/sort ndarray dimension ascending))
+(defn sort-array [ndarray dimension ascending] (Nd4j/sort ndarray dimension ascending))
 
 (defn sort-columns [ndarray row-idx ascending] (Nd4j/sortColumns ndarray row-idx ascending))
 
@@ -90,7 +98,8 @@
 
 (defn sort-with-indices [ndarray dimension ascending] (Nd4j/sortWithIndices ndarray dimension ascending))
 
-(defn sum 
+(defn sum
+  "[ndarray] Sums all numbers in array even if multiple rows."
   ([ndarray] (Nd4j/sum ndarray))
   ([ndarray dimension] (Nd4j/sum ndarray dimension)))
 
@@ -130,7 +139,7 @@
   ([source probs num-samples] (Nd4j/choice source probs num-samples))
   ([source probs num-samples rng] (Nd4j/choice source probs num-samples rng)))
 
-(defn concat [dimension & args] (Nd4j/concat dimension (into-array args)))
+(defn concat-arrays [dimension & args] (Nd4j/concat dimension (into-array args)))
 
 (defn data-type [] (Nd4j/dataType))
 
@@ -186,7 +195,7 @@
 
 (defn read-binary [read-file] (Nd4j/readBinary read-file))
 
-(defn read [input] (Nd4j/read input))
+(defn read-array [input] (Nd4j/read input))
 
 (defn read-numpy
   ([file-path] (Nd4j/readNumpy file-path))
@@ -202,7 +211,9 @@
 
 (defn ref-queue [] (Nd4j/refQueue))
 
-(defn jutsu-reverse [arr] (Nd4j/reverse arr))
+(defn reverse-array
+  "Reverses elements in each row and reverses the order of rows."
+  [arr] (Nd4j/reverse arr))
 
 (defn save-binary [arr save-to] (Nd4j/saveBinary arr save-to))
 
@@ -215,7 +226,7 @@
 (defn shape [arr] 
   (into [] (Nd4j/shape arr)))
 
-(defn shuffle
+(defn shuffle-array
   ([to-shuffle & args] (Nd4j/shuffle to-shuffle (into-array args))))
 
 (defn size-of-data-type []
@@ -261,7 +272,7 @@
 
 (defn exp! [ndarray] (Transforms/exp ndarray false))
 
-(defn and [x y] (Transforms/and x y))
+(defn and-arrays [x y] (Transforms/and x y))
 
 (defn acos [ndarray] (Transforms/acos ndarray true))
 
@@ -305,9 +316,9 @@
 
 (defn hard-tanh! [ndarray] (Transforms/hardTanh ndarray false))
 
-(defn identity [ndarray] (Transforms/identity ndarray true))
+(defn identity-array [ndarray] (Transforms/identity ndarray true))
 
-(defn identity! [ndarray] (Transforms/identity ndarray false))
+(defn identity-array! [ndarray] (Transforms/identity ndarray false))
 
 (defn leakyRelu [ndarray] (Transforms/leakyRelu ndarray true))
 
@@ -328,15 +339,15 @@
 (defn manhattan-distance [ndarray ndarray2]
   (Transforms/manhattanDistance ndarray ndarray2))
 
-(defn max
+(defn keep-max
   "k can also be second array"
   ([ndarray k] (Transforms/max ndarray k true)))
 
-(defn max! [ndarray k] (Transforms/max ndarray k false))
+(defn keep-max! [ndarray k] (Transforms/max ndarray k false))
 
-(defn min [ndarray k] (Transforms/min ndarray k true))
+(defn keep-min [ndarray k] (Transforms/min ndarray k true))
 
-(defn min! [ndarray k] (Transforms/min ndarray k false))
+(defn keep-min! [ndarray k] (Transforms/min ndarray k false))
 
 (defn neg [ndarray] (Transforms/neg ndarray true))
 
@@ -344,9 +355,9 @@
 
 (defn normalize! [ndarray] (Transforms/normalizeZeroMeanAndUnitVariance ndarray))
 
-(defn not [ndarray] (Transforms/not ndarray))
+(defn not-array [ndarray] (Transforms/not ndarray))
 
-(defn or [ndarray ndarray2] (Transforms/or ndarray ndarray2))
+(defn or-arrays [ndarray ndarray2] (Transforms/or ndarray ndarray2))
 
 (defn pow [ndarray power] (Transforms/pow ndarray power true))
 
@@ -503,7 +514,7 @@
 
 (defn valid? [ndarray] (.isValid ndarray))
 
-(defn vector? [ndarray] (.isVector ndarray))
+(defn vector-array? [ndarray] (.isVector ndarray))
 
 (defn view? [ndarray] (.isView ndarray))
 
@@ -529,21 +540,21 @@
 
 (defn major-stride [ndarray] (.majorStride ndarray))
 
-(defn max-number [ndarray] (.maxNumber ndarray))
+(defn max-num [ndarray] (.maxNumber ndarray))
 
-(defn mean-number [ndarray] (.meanNumber ndarray))
+(defn mean-num [ndarray] (.meanNumber ndarray))
 
-(defn min-number [ndarray] (.minNumber ndarray))
+(defn min-num [ndarray] (.minNumber ndarray))
 
 (defn neq [ndarray ndarray2] (.neq ndarray ndarray2))
 
 (defn neq! [ndarray ndarray2] (.neqi ndarray ndarray2))
 
-(defn norm1-number [ndarray] (.norm1Number ndarray))
+(defn norm1-num [ndarray] (.norm1Number ndarray))
 
-(defn norm2-number [ndarray] (.norm2Number ndarray))
+(defn norm2-num [ndarray] (.norm2Number ndarray))
 
-(defn normmax-number [ndarray] (.normmaxNumber ndarray))
+(defn normmax-num [ndarray] (.normmaxNumber ndarray))
 
 (defn offset [ndarray] (.offset ndarray))
 
@@ -714,11 +725,15 @@
     (.subiRowVector ndarray mn)
     ndarray))
 
-(defn get-max-index [ndarray]
-  (last (sort-by second (map-indexed (fn [i n] [n i]) ndarray))))
-
-(defn get-min-index [ndarray]
+(defn max-index
+  "Returns a vector like [max-number max-index]" 
+  [ndarray]
   (first (sort-by second (map-indexed (fn [i n] [n i]) ndarray))))
+
+(defn min-index
+  "Returns a vector like [min-number min-index]"
+  [ndarray]
+  (last (sort-by second (map-indexed (fn [i n] [n i]) ndarray))))
 
 ;;Should this return a value or an array?
 (defn inner-product [a1 a2]
