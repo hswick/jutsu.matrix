@@ -14,6 +14,14 @@ that works on the CPU and GPU.
 
 Most functions from nd4j have been implemented. If for some reason you don't see a particular one feel free to submit a PR! :D
 
+ND4J Resources
+
+http://nd4j.org/doc/org/nd4j/linalg/ops/transforms/Transforms.html
+
+http://nd4j.org/doc/org/nd4j/linalg/api/ndarray/BaseNDArray.html
+
+http://nd4j.org/doc/org/nd4j/linalg/factory/Nd4j.html
+
 # Usage
 
 ```clojure
@@ -66,7 +74,7 @@ because nd4j does not support 0 dimension arrays. This means you can't actually 
 The second reason is that nd4j works as a protocol/interface because it has multiple backends for cpu and gpu. For me those are the only backends I need to switch out.
 Personally, using multiple cpu libraries seems like added complexity. This means nd4j provides all the benefits of a protocol like core.matrix. 
 
-Thus following the core.matrix protocol is not a priority of mine.
+Even though following the protocol is not a priority, users should find that they are very similar.
 
 # FYI
 
