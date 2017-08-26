@@ -7,12 +7,10 @@ You can install this library from clojars:
 [hswick/jutsu.matrix "0.0.7"]
 ```
 This primarily serves as a light wrapper around nd4j linalg module and provides basic linear algebra support to those using ND4J arrays.
-Names of functions can be assumed to be similar to the original nd4j library but with clojure naming conventions.
-
-Library mostly designed to help work with deeplearning4j with an added side bonus of a fast linear algebra library for clojure
+Names of functions can mostly assumed to be similar to the original nd4j library but with clojure naming conventions. This is mostly designed to help work with deeplearning4j with an added side bonus of a fast linear algebra library for clojure
 that works on the CPU and GPU.
 
-Most functions from nd4j have been implemented. If for some reason you don't see a particular one feel free to submit a PR! :D
+98% of the nd4j api has been wrapped, if for some reason you don't see a particular one feel free to submit a PR! :D
 
 ND4J Resources
 
@@ -27,7 +25,7 @@ http://nd4j.org/doc/org/nd4j/linalg/factory/Nd4j.html
 ```clojure
 (require '[jutsu.matrix.core :as jm])
 
-;;This turns Clojure data into 
+;;This turns Clojure data into a matrix (NDArray type)
 (def m1 (jm/matrix [[1 2 3 4] [1 2 3 4]]))
 
 (def m2 (jm/matrix [[1 2 3 4] [1 2 3 4]]))
@@ -76,12 +74,18 @@ Personally, using multiple cpu libraries seems like added complexity. This means
 
 Even though following the protocol is not a priority, users should find that they are very similar.
 
+# Neanderthal
+
+Yes, I have heard of neanderthal. jutsu.matrix has different priorities.
+
 # FYI
 
 Where names from nd4j conflict with clojure core names I usually attached an -array to the end
 of the name to signify such an action was taking place on an NDArray.
 
-Like reverse is reverse-array, or identity is identity-array.
+For example reverse is reverse-array, or identity is identity-array.
+
+One exception is concat which is concat-arrays because it works on multiple arrays.
 # Dev
 
 Run `boot night` to startup nightlight and begin editing your project in a browser.
