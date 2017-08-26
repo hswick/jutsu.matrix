@@ -360,144 +360,272 @@
   [arr] (Nd4j/zerosLike arr))
 
 ;;Transform static methods
-(defn abs [ndarray] (Transforms/abs ndarray true))
+(defn abs
+  "Take the absolute of the array and return a new array."
+  [ndarray] (Transforms/abs ndarray true))
 
-(defn abs! [ndarray] (Transforms/abs ndarray false))
+(defn abs!
+  "Take the absolute of the array and change in place."
+  [ndarray] (Transforms/abs ndarray false))
 
-(defn sigmoid [ndarray] (Transforms/sigmoid ndarray true))
+(defn sigmoid
+  "Pass ndarray through sigmoid function and return a new array."
+  [ndarray] (Transforms/sigmoid ndarray true))
 
-(defn sigmoid! [ndarray] (Transforms/sigmoid ndarray false))
+(defn sigmoid!
+  "Pass ndarray through sigmoid function and change in place."
+  [ndarray] (Transforms/sigmoid ndarray false))
 
-(defn tanh [ndarray] (Transforms/tanh ndarray true))
+(defn tanh
+  "Pass ndarray through tanh function and return a new array."
+  [ndarray] (Transforms/tanh ndarray true))
 
-(defn tanh! [ndarray] (Transforms/tanh ndarray false))
+(defn tanh!
+  "Pass ndarray through tanh function and change in place."
+  [ndarray] (Transforms/tanh ndarray false))
 
-(defn sqrt [ndarray] (Transforms/sqrt ndarray true))
+(defn sqrt
+  "Pass ndarray through square root function and return new array."
+  [ndarray] (Transforms/sqrt ndarray true))
 
-(defn sqrt! [ndarray] (Transforms/sqrt ndarray))
+(defn sqrt!
+  "Pass ndarray through square root function and change in place."
+  [ndarray] (Transforms/sqrt ndarray false))
 
-(defn exp [ndarray] (Transforms/exp ndarray true))
+(defn exp 
+  "Square euler's number by the array and return new array."
+  [ndarray] (Transforms/exp ndarray true))
 
-(defn exp! [ndarray] (Transforms/exp ndarray false))
+(defn exp!
+  "Square euler's number by the array and change in place."
+  [ndarray] (Transforms/exp ndarray false))
 
-(defn and-arrays [x y] (Transforms/and x y))
+(defn and-arrays
+  "Return new array that is result of element wise AND comparison of both arrays."
+  [x y] (Transforms/and x y))
 
-(defn acos [ndarray] (Transforms/acos ndarray true))
+(defn acos
+  "Pass ndarray through arccosine function and return new array."
+  [ndarray] (Transforms/acos ndarray true))
 
-(defn acos! [ndarray] (Transforms/acos ndarray false))
+(defn acos!
+  "Pass ndarray through arccosine function and change in place."
+  [ndarray] (Transforms/acos ndarray false))
 
-(defn asin [ndarray] (Transforms/asin ndarray true))
+(defn asin
+  "Pass ndarray through arcsine function and return new array."
+  [ndarray] (Transforms/asin ndarray true))
 
-(defn asin! [ndarray] (Transforms/asin ndarray false))
+(defn asin!
+  "Pass ndarray through arcsine function and change in place."
+  [ndarray] (Transforms/asin ndarray false))
 
-(defn atan [ndarray] (Transforms/atan ndarray true))
+(defn atan
+  "Pass ndarray through arctangent function and return new array."
+  [ndarray] (Transforms/atan ndarray true))
 
-(defn atan! [ndarray] (Transforms/atan ndarray false))
+(defn atan!
+  "Pass ndarray through arctangent function and change in place."
+  [ndarray] (Transforms/atan ndarray false))
 
-(defn ceil [ndarray] (Transforms/ceil ndarray true))
+(defn ceil
+  "Rounds all numbers up and returns new array."
+  [ndarray] (Transforms/ceil ndarray true))
 
-(defn ceil! [ndarray] (Transforms/ceil ndarray false))
+(defn ceil!
+  "Rounds all numbers up and changes in place."
+  [ndarray] (Transforms/ceil ndarray false))
 
-(defn ceiling [ndarray] (Transforms/ceiling ndarray true))
+(defn ceiling
+  "Returns binary matrix of whether the number at a given index is greater than"
+  [ndarray] (Transforms/ceiling ndarray true))
 
-(defn ceiling! [ndarray] (Transforms/cos ndarray false))
+(defn ceiling!
+  "Changes array in place to create binary matrix of whether the number at a given index is greater than"
+  [ndarray] (Transforms/cos ndarray false))
 
-(defn cos [ndarray] (Transforms/ceiling ndarray true))
+(defn cos
+  "Pass ndarray through cosine function and return new array."
+  [ndarray] (Transforms/ceiling ndarray true))
 
-(defn cos! [ndarray] (Transforms/cos ndarray false))
+(defn cos!
+  "Pass ndarray through cosine function and change in place."
+  [ndarray] (Transforms/cos ndarray false))
 
-(defn cosine-sim [ndarray ndarray2] (Transforms/cosineSim ndarray ndarray2))
+(defn cosine-sim
+  "Get the cosine similarity between two arrays."
+  [ndarray ndarray2] (Transforms/cosineSim ndarray ndarray2))
 
-(defn eps [ndarray] (Transforms/eps ndarray true))
+(defn eps
+  "Pass ndarray through eps function and return new array."
+  [ndarray] (Transforms/eps ndarray true))
 
-(defn eps! [ndarray] (Transforms/eps ndarray false))
+(defn eps!
+  "pass array through eps function and change in place."
+  [ndarray] (Transforms/eps ndarray false))
 
-(defn floor [ndarray] (Transforms/floor ndarray true))
+(defn floor
+  "Rounds all values in the array down and returns new array."
+  [ndarray] (Transforms/floor ndarray true))
 
-(defn floor! [ndarray] (Transforms/floor ndarray false))
+(defn floor! 
+  "Rounds all values in the array down and changes in place."
+  [ndarray] (Transforms/floor ndarray false))
 
-(defn greater-than-or-equal [ndarray ndarray2] (Transforms/greaterThanOrEqual ndarray ndarray2 true))
+(defn greater-than-or-equal
+  "1 if greater than or equal to 0 otherwise (at each element), like eps function and returns new array."
+  [ndarray ndarray2] (Transforms/greaterThanOrEqual ndarray ndarray2 true))
 
-(defn greater-than-or-equal! [ndarray ndarray2] (Transforms/greaterThanOrEqual ndarray ndarray2 false))
+(defn greater-than-or-equal!
+  "1 if greater than or equal to 0 otherwise (at each element), like eps function and changes first array in place."
+  [ndarray ndarray2] (Transforms/greaterThanOrEqual ndarray ndarray2 false))
 
-(defn hard-tanh [ndarray] (Transforms/hardTanh ndarray true))
+(defn hard-tanh
+  "Passes ndarray through hard tanh function and returns new array."
+  [ndarray] (Transforms/hardTanh ndarray true))
 
-(defn hard-tanh! [ndarray] (Transforms/hardTanh ndarray false))
+(defn hard-tanh!
+  "Passes ndarray through hard tanh function and changes in place."
+  [ndarray] (Transforms/hardTanh ndarray false))
 
-(defn identity-array [ndarray] (Transforms/identity ndarray true))
+(defn identity-array
+  "Passes ndarray through identity function and returns new array."
+  [ndarray] (Transforms/identity ndarray true))
 
-(defn identity-array! [ndarray] (Transforms/identity ndarray false))
+(defn identity-array! [ndarray]
+  "Passes ndarray through identity function and changes in place."
+  (Transforms/identity ndarray false))
 
-(defn leakyRelu [ndarray] (Transforms/leakyRelu ndarray true))
+(defn leakyRelu [ndarray]
+  "Passes ndarray through leaky relu function and returns new array."
+  (Transforms/leakyRelu ndarray true))
 
-(defn leakyRelu! [ndarray] (Transforms/leakyRelu ndarray false))
+(defn leakyRelu!
+  "Passes ndarray through leaky relu function and changes in place."
+  [ndarray] (Transforms/leakyRelu ndarray false))
 
-(defn less-than-or-equal [ndarray ndarray2] (Transforms/lessThanOrEqual ndarray ndarray2 true))
+(defn less-than-or-equal
+  "1 if less than or equal to 0 otherwise (at each element) and returns new array"
+  [ndarray ndarray2] (Transforms/lessThanOrEqual ndarray ndarray2 true))
 
-(defn less-than-or-equal! [ndarray ndarray2] (Transforms/lessThanOrEqual ndarray ndarray2 false))
+(defn less-than-or-equal!
+  "1 if less than or equal to 0 otherwise (at each element) and changes first array in place"
+  [ndarray ndarray2] (Transforms/lessThanOrEqual ndarray ndarray2 false))
 
-(defn log 
+(defn log
+  "Pass ndarray through log function (optionally choosing base) and return new array."
   ([ndarray] (Transforms/log ndarray true))
   ([ndarray base] (Transforms/log ndarray base true)))
 
-(defn log! 
+(defn log!
+  "Pass ndarray through log function (optionally choosing base) and change in place."
   ([ndarray] (Transforms/log ndarray false))
   ([ndarray base] (Transforms/log ndarray base false)))
 
-(defn manhattan-distance [ndarray ndarray2]
+(defn manhattan-distance
+  "Get the manhattan distance between two arrays."
+  [ndarray ndarray2]
   (Transforms/manhattanDistance ndarray ndarray2))
 
 (defn keep-max
-  "k can also be second array"
+  "Element wise maximum function between two arrays or a single array and a value, returns new array."
   ([ndarray k] (Transforms/max ndarray k true)))
 
-(defn keep-max! [ndarray k] (Transforms/max ndarray k false))
+(defn keep-max!
+  "Element wise maximum function between two arrays or a single array and a value, changes in place."
+  [ndarray k] (Transforms/max ndarray k false))
 
-(defn keep-min [ndarray k] (Transforms/min ndarray k true))
+(defn keep-min
+  "Element wise minimum function between two arrays or a single array and a value, returns new array."
+  [ndarray k] (Transforms/min ndarray k true))
 
-(defn keep-min! [ndarray k] (Transforms/min ndarray k false))
+(defn keep-min!
+  "Element wise minimum function between two arrays or a single array and a value, changes in place."
+  [ndarray k] (Transforms/min ndarray k false))
 
-(defn neg [ndarray] (Transforms/neg ndarray true))
+(defn neg
+  "Return negative of array."
+  [ndarray] (Transforms/neg ndarray true))
 
-(defn neg! [ndarray] (Transforms/neg ndarray false))
+(defn neg!
+  "Change array to its negative form"
+  [ndarray] (Transforms/neg ndarray false))
 
-(defn normalize! [ndarray] (Transforms/normalizeZeroMeanAndUnitVariance ndarray))
+(defn normalize!
+  "Normalize data to zero mean and unit variance substract by the mean and divide by the standard deviation."
+  [ndarray] (Transforms/normalizeZeroMeanAndUnitVariance ndarray))
 
-(defn not-array [ndarray] (Transforms/not ndarray))
+(defn not-array
+  "Perform element wise not on array and return new array"
+  [ndarray] (Transforms/not ndarray))
 
-(defn or-arrays [ndarray ndarray2] (Transforms/or ndarray ndarray2))
+(defn or-arrays
+  "Perform element wise or comparison of two arrays."
+  [ndarray ndarray2] (Transforms/or ndarray ndarray2))
 
-(defn pow [ndarray power] (Transforms/pow ndarray power true))
+(defn pow
+  "Pass ndarray through power function (specifying the power) and returns new array."
+  [ndarray power] (Transforms/pow ndarray power true))
 
-(defn pow! [ndarray power] (Transforms/pow ndarray power false))
+(defn pow!
+  "Pass ndarray through power function (specifying the power) and change in place."
+  [ndarray power] (Transforms/pow ndarray power false))
 
-(defn relu [ndarray] (Transforms/relu ndarray true))
+(defn relu 
+  "Pass ndarray through relu function and return new array. Very popular for machine learning applications."
+  [ndarray] (Transforms/relu ndarray true))
 
-(defn relu! [ndarray] (Transforms/relu ndarray false))
+(defn relu!
+  "Pass ndarray through relu function and change in place. Very popular for machine learning applications."
+  [ndarray] (Transforms/relu ndarray false))
 
-(defn round [ndarray] (Transforms/round ndarray true))
+(defn round
+  "Pass ndarray through rounding function and return new array."
+  [ndarray] (Transforms/round ndarray true))
 
-(defn round! [ndarray] (Transforms/round ndarray false))
+(defn round!
+  "Pass ndarray through rounding function and change in place."
+  [ndarray] (Transforms/round ndarray false))
 
-(defn sign [ndarray] (Transforms/sign ndarray true))
+(defn sign
+  "Pass ndarray through signum function and return new array."
+  [ndarray] (Transforms/sign ndarray true))
 
-(defn sign! [ndarray] (Transforms/sign ndarray false))
+(defn sign!
+  "Pass ndarray through signum function and change in place."
+  [ndarray] (Transforms/sign ndarray false))
 
-(defn sin [ndarray] (Transforms/sin ndarray true))
+(defn sin
+  "Pass ndarray through sine function and return new array."
+  [ndarray] (Transforms/sin ndarray true))
 
-(defn sin! [ndarray] (Transforms/sin ndarray false))
+(defn sin!
+  "Pass ndarray through sine function and change in place."
+  [ndarray] (Transforms/sin ndarray false))
 
-(defn soft-plus [ndarray] (Transforms/softPlus ndarray true))
+(defn soft-plus
+  "Pass ndarray through soft plus function and return new array."
+  [ndarray] (Transforms/softPlus ndarray true))
 
-(defn soft-plus! [ndarray] (Transforms/softPlus ndarray false))
+(defn soft-plus! 
+  "Pass ndarray through soft plus and change in place."
+  [ndarray] (Transforms/softPlus ndarray false))
 
-(defn stabilize [ndarray k] (Transforms/stabilize ndarray k true))
+(defn stabilize
+  "Stabilize to be within a range of k and return new array."
+  [ndarray k] (Transforms/stabilize ndarray k true))
 
-(defn stabilize! [ndarray k] (Transforms/stabilize ndarray k false))
+(defn stabilize! 
+  "Stabilize to be within a range of k and change in place."
+  [ndarray k] (Transforms/stabilize ndarray k false))
 
-(defn unit-vec [ndarray] (Transforms/unitVec ndarray))
+(defn unit-vec
+  "Scale by 1 / norm2 of the matrix."
+  [ndarray] (Transforms/unitVec ndarray))
 
-(defn xor [ndarray ndarray2] (Transforms/xor ndarray ndarray2))
+(defn xor
+  "Element wise xor comparison on two arrays."
+  [ndarray ndarray2] (Transforms/xor ndarray ndarray2))
 
 ;;ND4j Methods
 (defn linear-view [ndarray] (.linearView ndarray))
