@@ -628,291 +628,534 @@
   [ndarray ndarray2] (Transforms/xor ndarray ndarray2))
 
 ;;ND4j Methods
-(defn linear-view [ndarray] (.linearView ndarray))
+(defn linear-view
+  "Returns a linear view reference of shape 1,length(ndarray)."
+  [ndarray] (.linearView ndarray))
 
-(defn transpose [ndarray] (.transpose ndarray))
+(defn transpose
+  "Return transposed copy of ndarray."
+  [ndarray] (.transpose ndarray))
 
-(defn mmul [ndarray ndarray2] (.mmul ndarray ndarray2))
+(defn transpose!
+  "Return transposed version of ndarray and change in place"
+  [ndarray] (.transposei ndarray))
 
-(defn mmul! [ndarray ndarray2] (.mmuli ndarray ndarray2))
+(defn mmul
+  "Perform matrix multiplication and return new array."
+  [ndarray ndarray2] (.mmul ndarray ndarray2))
 
-(defn mul-column-vector [ndarray column-vector] (.mulColumnVector ndarray column-vector))
+(defn mmul!
+  "Perform matrix multiplication and change first array in place."
+  [ndarray ndarray2] (.mmuli ndarray ndarray2))
 
-(defn mul-column-vector! [ndarray column-vector] (.muliColumnVector ndarray column-vector))
+(defn mul-column-vector
+  "Multiplication of a column vector, returns new array."
+  [ndarray column-vector] (.mulColumnVector ndarray column-vector))
 
-(defn mul-row-vector [ndarray row-vector] (.mulRowVector ndarray row-vector))
+(defn mul-column-vector!
+  "Multiplication of a column vector, changes in place."
+  [ndarray column-vector] (.muliColumnVector ndarray column-vector))
 
-(defn mul-row-vector! [ndarray row-vector] (.muliRowVector ndarray row-vector))
+(defn mul-row-vector
+  "Multiplication of a row vector, returns new array."
+  [ndarray row-vector] (.mulRowVector ndarray row-vector))
 
-(defn reshape [ndarray rows cols] (.reshape ndarray rows cols))
+(defn mul-row-vector!
+  "Multiplication of a row vector, changes in place."
+  [ndarray row-vector] (.muliRowVector ndarray row-vector))
 
-(defn add [ndarray ndarray2] (.add ndarray ndarray2))
+(defn reshape
+  "Reshapes the ndarray (can't change the length of the ndarray), changes in place."
+  [ndarray rows cols] (.reshape ndarray rows cols))
 
-(defn add! [ndarray ndarray2] (.addi ndarray ndarray2))
+(defn add
+  "Addition of two arrays, returns new array"
+  [ndarray ndarray2] (.add ndarray ndarray2))
 
-(defn add-column-vector [ndarray column-vector]
+(defn add!
+  "Addition of two arrays, change in place."
+  [ndarray ndarray2] (.addi ndarray ndarray2))
+
+(defn add-column-vector
+  "Addition of a column vector, returns new array."
+  [ndarray column-vector]
   (.addColumnVector ndarray column-vector))
 
-(defn add-column-vector! [ndarray column-vector]
+(defn add-column-vector!
+  "Addition of a column vector, changes in place."
+  [ndarray column-vector]
   (.addiColumnVector ndarray column-vector))
 
-(defn add-row-vector [ndarray row-vector]
+(defn add-row-vector
+  "Addition of a row vector, returns new array."
+  [ndarray row-vector]
   (.addRowVector ndarray row-vector))
 
-(defn add-row-vector! [ndarray row-vector]
+(defn add-row-vector!
+  "Addition of a row vector, changes in place."
+  [ndarray row-vector]
   (.addiRowVector ndarray row-vector))
 
-(defn assign [ndarray] (.assign ndarray))
+(defn assign
+  "Assign all of the elements in the given ndarray to this ndarray or value."
+  [ndarray1 ndarray2] (.assign ndarray1 ndarray2))
 
-(defn check-dimensions [ndarray ndarray2] (.ndarray ndarray2))
+(defn check-dimensions
+  "Validate dimensions are equal."
+  [ndarray ndarray2] (.checkDimensions ndarray ndarray2))
 
-(defn cleanup [ndarray] (.cleanup ndarray))
+(defn cleanup!
+  "Cleanup resources."
+  [ndarray] (.cleanup ndarray))
 
-(defn columns [ndarray] (.columns ndarray))
+(defn columns
+  "Number of columns (shape[1]), throws an exception when called when not 2d."
+  [ndarray] (.columns ndarray))
 
-(defn cumsum [ndarray dimension] (.cumsum ndarray dimension))
+(defn cumsum
+  "Cumulative sum along a dimension (in place), returns new array."
+  [ndarray dimension] (.cumsum ndarray dimension))
 
-(defn cumsum! [ndarray dimension] (.cumsumi ndarray dimension))
+(defn cumsum!
+  "Cumulative sum along a dimension (in place), chanes in place."
+  [ndarray dimension] (.cumsumi ndarray dimension))
 
-(defn get-data [ndarray] (.data ndarray))
+(defn get-data
+  "Returns a linear double array representation of this ndarray"
+  [ndarray] (.data ndarray))
 
-(defn one-norm-distance [ndarray ndarray2] (.distance1 ndarray ndarray2))
+(defn one-norm-distance
+  "Returns the (1-norm) distance."
+  [ndarray ndarray2] (.distance1 ndarray ndarray2))
 
-(defn div [ndarray ndarray2] (.div ndarray ndarray2))
+(defn div
+  "Divide two arrays and return new array."
+  [ndarray ndarray2] (.div ndarray ndarray2))
 
-(defn div! [ndarray ndarray2] (.divi ndarray ndarray2))
+(defn div!
+  "Divide two arrays and change first array in place."
+  [ndarray ndarray2] (.divi ndarray ndarray2))
 
-(defn div-column-vector [ndarray column-vector] (.divColumnVector ndarray column-vector))
+(defn div-column-vector
+  "Division of array by column vector, returns new array."
+  [ndarray column-vector] (.divColumnVector ndarray column-vector))
 
-(defn div-column-vector! [ndarray column-vector] (.diviColumnVector ndarray column-vector))
+(defn div-column-vector!
+  "Division of array by column vector, changes in place."
+  [ndarray column-vector] (.diviColumnVector ndarray column-vector))
 
-(defn div-row-vector [ndarray row-vector] (.divRowVector ndarray row-vector))
+(defn div-row-vector
+  "Division of array by row vector, returns new array."
+  [ndarray row-vector] (.divRowVector ndarray row-vector))
 
-(defn div-row-vector! [ndarray row-vector] (.diviRowVector ndarray row-vector))
+(defn div-row-vector!
+  "Division of array by row vector, changes in place."
+  [ndarray row-vector] (.diviRowVector ndarray row-vector))
 
 (defn dup
+  "Returns a copy of this ndarray, (optionally) where the returned ndarray has the specified order."
   ([ndarray] (.dup ndarray))
   ([ndarray order] (.dup ndarray order)))
 
-(defn element-stride [ndarray] (.elementStride ndarray))
+(defn element-stride
+  "Element stride (one element to the next, also called the defualt stride: 1 for normal 2 for complex)."
+  [ndarray] (.elementStride ndarray))
 
-(defn element-wise-stride [ndarray] (.element-wise-stride ndarray))
+(defn element-wise-stride
+  "Element wise stride."
+  [ndarray] (.element-wise-stride ndarray))
 
-(defn eq [ndarray ndarray2] (.eq ndarray ndarray2))
+(defn eq
+  "Returns the binary ndarray for 'Equals' comparison."
+  [ndarray ndarray2] (.eq ndarray ndarray2))
 
-(defn eq! [ndarray ndarray2] (.eqi ndarray ndarray2))
+(defn eq!
+  "Returns the binary ndarray for 'Equals' comparison, changes in place."
+  [ndarray ndarray2] (.eqi ndarray ndarray2))
 
-(defn equals? [ndarray ndarray2] (.equals ndarray ndarray2))
+(defn equals?
+  "Compare two matrices."
+  [ndarray ndarray2] (.equals ndarray ndarray2))
 
-(defn equals-with-eps? [ndarray ndarray2 eps-value] (.equalsWithEps ndarray ndarray2 eps-value))
+(defn equals-with-eps?
+  "This method allows you to compare INDArray against other INDArray, with variable eps."
+  [ndarray ndarray2 eps-value] (.equalsWithEps ndarray ndarray2 eps-value))
 
-(defn fmod [ndarray ndarray2] (.fmod ndarray ndarray2))
+(defn fmod
+  "Remainder of division returns new array."
+  [ndarray ndarray2] (.fmod ndarray ndarray2))
 
-(defn fmod! [ndarray ndarray2] (.fmodi ndarray ndarray2))
+(defn fmod!
+  "Remainder of division changes in place."
+  [ndarray ndarray2] (.fmodi ndarray ndarray2))
 
-(defn get-column [ndarray c] (.getColumn ndarray c))
+(defn get-column
+  "Get the specified column."
+  [ndarray c] (.getColumn ndarray c))
 
 (defn get-double
+  "Returns the elements at the specified indices"
   ([ndarray i] (.getDouble ndarray i))
   ([ndarray i j] (.getDouble ndarray i j)))
 
 (defn get-float
+  "Returns the elements at the specified indices."
   ([ndarray i] (.getFloat ndarray i))
   ([ndarray i j] (.getFloat ndarray i j)))
 
-(defn get-row [ndarray r] (.getRow ndarray r))
+(defn get-row
+  "Get a copy of a row."
+  [ndarray r] (.getRow ndarray r))
 
 (defn get-scalar
+  "Returns the element(s) at the specified index(indices)"
   ([ndarray i] (.getScalar ndarray i))
   ([ndarray i j] (.getScalar ndarray i j)))
 
-(defn gt [ndarray ndarray2] (.gt ndarray ndarray2))
+(defn gt
+  "Returns the binary ndarray for greater comparison."
+  [ndarray ndarray2] (.gt ndarray ndarray2))
 
-(defn gt! [ndarray ndarray2] (.gti ndarray ndarray2))
+(defn gt!
+  "Returns the binary ndarray for greater comparison, changes in place."
+  [ndarray ndarray2] (.gti ndarray ndarray2))
 
-(defn index [ndarray row column] (.index ndarray row column))
+(defn index
+  "Return the linear index of the specified row and column."
+  [ndarray row column] (.index ndarray row column))
 
-(defn inner-most-stride [ndarray] (.innerMostStride ndarray))
+(defn inner-most-stride
+  "Get the inner most stride wrt the ordering of the array."
+  [ndarray] (.innerMostStride ndarray))
 
-(defn cleaned-up? [ndarray] (.isCleanedUp ndarray))
+(defn cleaned-up?
+  "Returns true if the ndarray has already been freed."
+  [ndarray] (.isCleanedUp ndarray))
 
-(defn column-vector? [ndarray] (.isColumnVector ndarray))
+(defn column-vector?
+  "Checks whether the matrix is a column vector."
+  [ndarray] (.isColumnVector ndarray))
 
-(defn compressed? [ndarray] (.isCompressed ndarray))
+(defn compressed?
+  "Returns true if this array is compressed, and false otherwise."
+  [ndarray] (.isCompressed ndarray))
 
-(defn matrix? [ndarray] (.isMatrix ndarray))
+(defn matrix?
+  "Returns true if this ndarray is 2d or 3d with a singleton element."
+  [ndarray] (.isMatrix ndarray))
 
-(defn row-vector? [ndarray] (.isRowVector ndarray))
+(defn row-vector?
+  "Checks whether the matrix is a row vector."
+  [ndarray] (.isRowVector ndarray))
 
-(defn scalar? [ndarray] (.isScalar ndarray))
+(defn scalar?
+  "Test whether a matrix is scalar."
+  [ndarray] (.isScalar ndarray))
 
-(defn square? [ndarray] (.isSquare ndarray))
+(defn square?
+  "Returns whether the matrix has the same rows and columns."
+  [ndarray] (.isSquare ndarray))
 
-(defn valid? [ndarray] (.isValid ndarray))
+(defn valid?
+  "Returns whether the ndarray is valid or not."
+  [ndarray] (.isValid ndarray))
 
-(defn vector-array? [ndarray] (.isVector ndarray))
+(defn vector-array?
+  "Checks whether the matrix is a vector."
+  [ndarray] (.isVector ndarray))
 
-(defn view? [ndarray] (.isView ndarray))
+(defn view?
+  "Returns true if this array is a view or not."
+  [ndarray] (.isView ndarray))
 
-(defn wrap-around? [ndarray] (.isWrapAround ndarray))
+(defn wrap-around?
+  "Returns true if the ndarray on linear indexing wraps around based on the stride(1) of the ndarray This is a useful optimization in linear view where strides that might otherwise go out of bounds but wrap around instead."
+  [ndarray] (.isWrapAround ndarray))
 
-(defn iterator [ndarray] (.iterator ndarray))
+(defn iterator
+  "Returns a java iterator for the given array."
+  [ndarray] (.iterator ndarray))
 
-(defn length [ndarray] (.length ndarray))
+(defn length
+  "Returns the total number of elements in the ndarray as an integer."
+  [ndarray] (.length ndarray))
 
-(defn length-long [ndarray] (.lengthLong ndarray))
+(defn length-long
+  "Returns the total number of elements in the ndarray as a long integer."
+  [ndarray] (.lengthLong ndarray))
 
-(defn linear-index [ndarray i] (.linearIndex ndarray i))
+(defn linear-index
+  "Get the linear index of the data in to the array."
+  [ndarray i] (.linearIndex ndarray i))
 
-(defn linear-view-column-order [ndarray] (.linearViewColumnOrder ndarray))
+(defn linear-view-column-order
+  "Returns a linear view reference of shape 1,length(ndarray)."
+  [ndarray] (.linearViewColumnOrder ndarray))
 
-(defn lt [ndarray ndarray2] (.lt ndarray ndarray2))
+(defn lt
+  "Returns the binary ndarray for less comparison."
+  [ndarray ndarray2] (.lt ndarray ndarray2))
 
-(defn lt! [ndarray ndarray2] (.lti ndarray ndarray2))
+(defn lt!
+  "Returns the binary ndarray for less comparison, changes first array in place."
+  [ndarray ndarray2] (.lti ndarray ndarray2))
 
-(defn lte [ndarray ndarray2] (.lte ndarray ndarray2))
+(defn lte
+  "Returns the binary ndarray for less than or equals comparison."
+  [ndarray ndarray2] (.lte ndarray ndarray2))
 
-(defn lte! [ndarray ndarray2] (.ltei ndarray ndarray2))
+(defn lte! 
+  "Returns the binary ndarray for less than or equals comparison, changes first array in place."
+  [ndarray ndarray2] (.ltei ndarray ndarray2))
 
-(defn major-stride [ndarray] (.majorStride ndarray))
+(defn major-stride
+  "Return the major stride for an ndarray."
+  [ndarray] (.majorStride ndarray))
 
-(defn max-num [ndarray] (.maxNumber ndarray))
+(defn max-num
+  "Get the maximum number in the array."
+  [ndarray] (.maxNumber ndarray))
 
-(defn mean-num [ndarray] (.meanNumber ndarray))
+(defn mean-num
+  "Get the mean number of the array."
+  [ndarray] (.meanNumber ndarray))
 
-(defn min-num [ndarray] (.minNumber ndarray))
+(defn min-num
+  "Get the minimum number of the array."
+  [ndarray] (.minNumber ndarray))
 
-(defn neq [ndarray ndarray2] (.neq ndarray ndarray2))
+(defn neq
+  "Returns the binary ndarray for not equals comparison."
+  [ndarray ndarray2] (.neq ndarray ndarray2))
 
-(defn neq! [ndarray ndarray2] (.neqi ndarray ndarray2))
+(defn neq!
+  "Returns the binary ndarray for not equals comparison, changes first array in place."
+  [ndarray ndarray2] (.neqi ndarray ndarray2))
 
-(defn norm1-num [ndarray] (.norm1Number ndarray))
+(defn norm1-num
+  "Returns the norm1 number"
+  [ndarray] (.norm1Number ndarray))
 
-(defn norm2-num [ndarray] (.norm2Number ndarray))
+(defn norm2-num
+  "Returns the norm2 number"
+  [ndarray] (.norm2Number ndarray))
 
-(defn normmax-num [ndarray] (.normmaxNumber ndarray))
+(defn normmax-num
+  "Returns the normmax number."
+  [ndarray] (.normmaxNumber ndarray))
 
-(defn offset [ndarray] (.offset ndarray))
+(defn offset
+  "Returns the start of where the ndarray is for the underlying data"
+  [ndarray] (.offset ndarray))
 
-(defn ordering [ndarray] (.ordering ndarray))
+(defn ordering
+  "Return the ordering (fortran or c) of this ndarray"
+  [ndarray] (.ordering ndarray))
 
-(defn original-offset [ndarray] (.originalOffset ndarray))
+(defn original-offset
+  "Returns the start of where the ndarray is for the original data buffer"
+  [ndarray] (.originalOffset ndarray))
 
 (defn put
+  "Put the elements of the ndarray in to the specified indices."
   ([ndarray indices element] (.put ndarray indices element))
   ([ndarray i j element] (.put ndarray i j element)))
 
-(defn put-column [ndarray column toput] (.putColumn ndarray column toput))
+(defn put-column
+  "Insert a column in to this array Will throw an exception if this ndarray is not a matrix"
+  [ndarray column toput] (.putColumn ndarray column toput))
 
-(defn put-row [ndarray row toput] (.putRow ndarray row toput))
+(defn put-row
+  "Insert a row in to this array Will throw an exception if this ndarray is not a matrix"
+  [ndarray row toput] (.putRow ndarray row toput))
 
 (defn put-scalar
+  "Insert a scalar float at the specified index (indices)"
   ([ndarray i value] (.putScalar ndarray i value))
   ([ndarray row col value] (.putScalar ndarray row col value))
   ([ndarray dim0 dim1 dim2 value] (.putScalar ndarray dim0 dim1 dim2 value))
   ([ndarray dim0 dim1 dim2 dim3 value] (.putScalar ndarray dim0 dim1 dim2 dim3 value)))
 
-(defn put-slice [ndarray slice put] (.putSlice ndarray slice put))
+(defn put-slice
+  "Assigns the given matrix (put) to the specified slice."
+  [ndarray slice put] (.putSlice ndarray slice put))
 
-(defn rank [ndarray] (.rank ndarray))
+(defn rank
+  "Returns the rank of the ndarray (the number of dimensions)."
+  [ndarray] (.rank ndarray))
 
-(defn ravel 
+(defn ravel
+  "Flattens the array for linear indexing."
   ([ndarray] (.ravel ndarray))
   ([ndarray order] (.ravel ndarray order)))
 
-(defn rdiv [ndarray ndarray2] (.rdiv ndarray ndarray2))
+(defn rdiv
+  "Reverse division, returns new array."
+  [ndarray ndarray2] (.rdiv ndarray ndarray2))
 
-(defn rdiv! [ndarray ndarray2] (.rdivi ndarray ndarray2))
+(defn rdiv!
+  "Reverse division change first array in place."
+  [ndarray ndarray2] (.rdivi ndarray ndarray2))
 
-(defn rdiv-column-vector [ndarray column-vector] (.rdivColumnVector ndarray column-vector))
+(defn rdiv-column-vector
+  "Reverse divison of a column vector"
+  [ndarray column-vector] (.rdivColumnVector ndarray column-vector))
 
-(defn rdiv-column-vector! [ndarray column-vector] (.rdiviColumnVector ndarray column-vector))
+(defn rdiv-column-vector!
+  "Reverse divison of a column vector, changes in place."
+  [ndarray column-vector] (.rdiviColumnVector ndarray column-vector))
 
-(defn rdiv-row-vector [ndarray row-vector] (.rdivRowVector ndarray row-vector))
+(defn rdiv-row-vector
+  "Reverse divison of a row vector"
+  [ndarray row-vector] (.rdivRowVector ndarray row-vector))
 
-(defn rdiv-row-vector! [ndarray row-vector] (.rdiviRowVector ndarray row-vector))
+(defn rdiv-row-vector!
+  "Reverse divison of a row vector, changes in place."
+  [ndarray row-vector] (.rdiviRowVector ndarray row-vector))
 
-(defn remainder [ndarray denominator] (.remainder ndarray denominator))
+(defn remainder
+  "Remainder operator"
+  [ndarray denominator] (.remainder ndarray denominator))
 
-(defn remainder! [ndarray denominator] (.remainderi ndarray denominator))
+(defn remainder! 
+  "Remainder operator, changes in place."
+  [ndarray denominator] (.remainderi ndarray denominator))
 
-(defn repmat [shape] (.repmat shape))
+(defn repmat
+  "Replicate and tile array to fill out to the given shape See: https://github.com/numpy/numpy/blob/master/numpy/matlib.py#L310-L358"
+  [shape] (.repmat shape))
 
-(defn reset-linear-view! [ndarray] (.resetLinearView ndarray))
+(defn reset-linear-view!
+  "Resets the linear view"
+  [ndarray] (.resetLinearView ndarray))
 
-(defn rows [ndarray] (.rows ndarray))
+(defn rows
+  "Returns the number of rows in the array (only 2d) throws an exception when called when not 2d"
+  [ndarray] (.rows ndarray))
 
-(defn rsub [ndarray ndarray2] (.rsub ndarray ndarray2))
+(defn rsub
+  "Reverse subtraction"
+  [ndarray ndarray2] (.rsub ndarray ndarray2))
 
-(defn rsub! [ndarray ndarray2] (.rsubi ndarray ndarray2))
+(defn rsub!
+  "Reverse subtraction, changes first array in place."
+  [ndarray ndarray2] (.rsubi ndarray ndarray2))
 
-(defn rsub-column-vector [ndarray column-vector] (.rsubColumnVector ndarray column-vector))
+(defn rsub-column-vector
+  "Reverse subtraction of a column vector"
+  [ndarray column-vector] (.rsubColumnVector ndarray column-vector))
 
-(defn rsub-column-vector! [ndarray column-vector] (.rsubiColumnVector ndarray column-vector))
+(defn rsub-column-vector!
+  "Reverse subtraction of a column vector, changes in place."
+  [ndarray column-vector] (.rsubiColumnVector ndarray column-vector))
 
-(defn rsub-row-vector! [ndarray row-vector] (.rsubiRowVector ndarray row-vector))
+(defn rsub-row-vector
+  "Reverse subtraction of a row vector."
+  [ndarray row-vector] (.rsubRowVector ndarray row-vector))
 
-(defn set-order! [ndarray order] (.setOrder ndarray order))
+(defn rsub-row-vector!
+  "Reverse subtraction of a row vector, changes in place."
+  [ndarray row-vector] (.rsubiRowVector ndarray row-vector))
 
-(defn set-stride! [ndarray stride] (.setStride ndarray stride))
+(defn set-order!
+  "Set the ordering."
+  [ndarray order] (.setOrder ndarray order))
 
-(defn size [ndarray dimension] (.size ndarray dimension))
+(defn set-stride!
+  "Stride setter"
+  [ndarray stride] (.setStride ndarray stride))
+
+(defn size
+  "Returns the size of this array along a particular dimension."
+  [ndarray dimension] (.size ndarray dimension))
 
 (defn slice
+  "Returns the specified slice of this matrix, optionally along a dimension."
   ([ndarray s] (.slice ndarray s))
   ([ndarray s dimension] (.slice ndarray s dimension)))
 
-(defn slices [ndarray] (.slices ndarray))
+(defn slices
+  "Number of slices: aka shape[0]"
+  [ndarray] (.slices ndarray))
 
-(defn squared-distance [ndarray ndarray2] (.squaredDistance ndarray ndarray2))
+(defn squared-distance
+  "Returns the square of the Euclidean distance."
+  [ndarray ndarray2] (.squaredDistance ndarray ndarray2))
 
-(defn std-number [ndarray] (.stdNumber ndarray))
+(defn std-number
+  "Standard deviation of an ndarray"
+  [ndarray] (.stdNumber ndarray))
 
-(defn mul [ndarray ndarray2] (.mul ndarray ndarray2))
+(defn mul
+  "Multiplication of two arrays or scalar"
+  [ndarray ndarray2] (.mul ndarray ndarray2))
 
-(defn mul! [ndarray ndarray2] (.muli ndarray ndarray2))
+(defn mul!
+   "Multiplication of two arrays or scalar, changes in place."
+  [ndarray ndarray2] (.muli ndarray ndarray2))
 
 (defn stride
+  "Returns the stride(indices along the linear index for which each slice is accessed) of this array"
   ([ndarray] (.stride ndarray))
   ([ndarray dimension] (.stride ndarray dimension)))
 
-(defn sub [ndarray ndarray2] (.sub ndarray ndarray2))
+(defn sub
+  "Subtraction of two matrices or scalar."
+  [ndarray ndarray2] (.sub ndarray ndarray2))
 
-(defn sub! [ndarray ndarray2] (.subi ndarray ndarray2))
+(defn sub!
+   "Subtraction of two matrices or scalar, changes first array in place."
+  [ndarray ndarray2] (.subi ndarray ndarray2))
 
-(defn sub-column-vector [ndarray column-vector] (.subColumnVector ndarray column-vector))
+(defn sub-column-vector
+  "Subtraction of a column vector"
+  [ndarray column-vector] (.subColumnVector ndarray column-vector))
 
-(defn sub-column-vector! [ndarray column-vector] (.subiColumnVector ndarray column-vector))
+(defn sub-column-vector!
+  "Subtraction of a column vector, changes in place."
+  [ndarray column-vector] (.subiColumnVector ndarray column-vector))
 
-(defn sub-row-vector [ndarray row-vector] (.subRowVector ndarray row-vector))
+(defn sub-row-vector
+  "Subtraction of a row vector"
+  [ndarray row-vector] (.subRowVector ndarray row-vector))
 
-(defn sub-row-vector! [ndarray row-vector] (.subiRowVector ndarray row-vector))
+(defn sub-row-vector!
+  "Subtraction of a row vector, changes in place."
+  [ndarray row-vector] (.subiRowVector ndarray row-vector))
 
-(defn sum-number [ndarray] (.sumNumber ndarray))
+(defn swap-axes
+  "Mainly here for people coming from numpy."
+  [ndarray dimension with] (.swapAxes ndarray dimension with))
 
-(defn swap-axes [ndarray dimension with] (.swapAxes ndarray dimension with))
+(defn to-string
+  "Generate string representation of the matrix."
+  [ndarray] (.toString ndarray))
 
-(defn to-string [ndarray] (.toString ndarray))
-
-(defn transpose! [ndarray] (.transposei ndarray))
-
-(defn vector-along-dimension [ndarray index dimension]
+(defn vector-along-dimension
+  "Get the vector along a particular dimension"
+  [ndarray index dimension]
   (.vectorAlongDimension ndarray index dimension))
 
-(defn vectors-along-dimension [ndarray dimension]
+(defn vectors-along-dimension
+  "Returns the number of possible vectors for a given dimension"
+  [ndarray dimension]
   (.vectorsAlongDimension ndarray dimension))
 
-;;Stacks a collection of ndarrays vertically (by row)
-;;Doesn't work if >2 X N, only 1 X N
-(defn vstack-arrays [ndarrays]
+
+(defn vstack-arrays
+  "Stacks a collection of ndarrays vertically (by row)
+  Doesn't work if >2 X N, only 1 X N"
+  [ndarrays]
   (let [shape (.shape (first ndarrays))
         new-array (Nd4j/create (count ndarrays) (second shape))]
     (doseq [n (range 0 (count ndarrays))]
       (.putRow new-array n (nth ndarrays n)))
     new-array))
 
-;;Stacks a collection of ndarrays horizontally
-(defn hstack-arrays [ndarrays]
+
+(defn hstack-arrays
+  "Stacks a collection of ndarrays horizontally"
+  [ndarrays]
   (let [shape (.shape (first ndarrays))
         new-array (Nd4j/create (first shape) (count ndarrays))]
     (doseq [n (range 0 (count ndarrays))]
@@ -920,7 +1163,9 @@
     new-array))
 
 ;;Algorithms and other built formulas
-(defn mean [ndarray]
+(defn mean
+  "Return mean vector"
+  [ndarray]
   (let [shape (.shape ndarray)
         nrows (first shape)
         ncols (second shape)
@@ -929,7 +1174,9 @@
       (.addi new-array (.getRow ndarray i)))
     new-array))
 
-(defn covariance [ndarray]
+(defn covariance
+  "Calculate covariance of ndarray."
+  [ndarray]
     (let [average (mean ndarray)
           shape (.shape ndarray)
           sum (Nd4j/zeros (second shape) (second shape))]
@@ -939,7 +1186,9 @@
           (.addi sum row-covar)))         
       (.div sum (first shape))))
 
-(defn svd-decomp [ndarray]
+(defn svd-decomp
+  "Single value decomposition of array, returns a map with keys :singular-values and :eigenvectors-transposed"
+  [ndarray]
   (let [shape (.shape ndarray)
         rows (first shape)
         cols (second shape)
@@ -949,7 +1198,9 @@
       ndarray s nil vt)
     {:singular-values s :eigenvectors-transposed vt}))
 
-(defn pca [num-dims ndarray]
+(defn pca
+  "Returns array compressed by principal component analysis to specified number of dimensions."
+  [num-dims ndarray]
   (let [covar (covariance ndarray)
         svd-comps (svd-decomp covar)
         factors (->> (map-indexed (fn [i n] [n i]) (:singular-values svd-comps))
@@ -960,7 +1211,13 @@
                      hstack-arrays)]
     (.mmul ndarray factors)))
 
-(defn normalize-zero! [ndarray]
+(defn mean-vector
+  [ndarray]
+  (Nd4j/mean ndarray 0))
+
+(defn normalize-zero!
+  "Normalize array "
+  [ndarray]
   (let [mn (Nd4j/mean ndarray 0)]
     (.subiRowVector ndarray mn)
     ndarray))
