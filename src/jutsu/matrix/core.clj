@@ -7,18 +7,22 @@
 ;;http://nd4j.org/doc/org/nd4j/linalg/api/ndarray/BaseNDArray.html
 ;;http://nd4j.org/doc/org/nd4j/linalg/factory/Nd4j.html
 
-(defn num-rows [coll]
+(defn num-rows
+  "Get number of rows in ndarray or clojure coll."
+  [coll]
   (if (instance? INDArray coll)
     (first (.shape coll))
     (if (coll? (first coll)) (count coll) 1)))
 
-(defn num-cols [coll]
+(defn num-cols
+  "Get number of columns in ndarray or clojure coll."
+  [coll]
   (if (instance? INDArray coll)
     (second (.shape coll))
     (if (coll? (first coll)) (count (first coll)) (count coll))))
 
 (defn matrix 
-  "Converts clojure data to a ND4J array. Currently only supports 1 and 2 dimensional arrays."
+  "Converts clojure data to a ND4J matrix or vector."
   ([coll]
    (let [h (num-rows coll) w (num-cols coll)]
     (if (= h 1)
@@ -29,7 +33,9 @@
         new-array))))
   ([n & args] (matrix (cons n args))))
 
-(defn create [rows cols]
+(defn create
+  "Create a new empty array with given shape."
+  [rows cols]
   (Nd4j/create rows cols))
 
 ;;ND4J static methods
@@ -39,20 +45,33 @@
   ([rows cols] (Nd4j/zeros rows cols)))
 
 (defn diag
+  "Creates a new matrix where the values of the given vector are the diagonal values of the matrix if a vector is passed in, if a matrix is returns the kth diagonal in the matrix."
   ([ndarray] (Nd4j/diag ndarray))
   ([ndarray k] (Nd4j/diag ndarray k)))
 
-(defn from-byte-array [byte-array] (Nd4j/fromByteArray byte-array))
+(defn from-byte-array
+  "Read an ndarray from a byte array."
+  [byte-array] (Nd4j/fromByteArray byte-array))
 
-(defn clear-nans [ndarray] (Nd4j/clearNans ndarray))
+(defn clear-nans 
+  "Clear nans from an ndarray."
+  [ndarray] (Nd4j/clearNans ndarray))
 
-(defn get-backend [] (Nd4j/getBackend))
+(defn get-backend
+  "Get information about current backend like CPU vs GPU."
+  [] (Nd4j/getBackend))
 
-(defn get-compressor [] (Nd4j/getCompressor))
+(defn get-compressor
+  "This method returns BasicNDArrayCompressor instance, suitable for NDArray compression/decompression at runtime."
+  [] (Nd4j/getCompressor))
 
-(defn get-fft [] (Nd4j/getFFt))
+(defn get-fft
+  "Returns the fft instance."
+  [] (Nd4j/getFFt))
 
-(defn fallback-mode-enabled? [] (Nd4j/isFallbackModeEnabled))
+(defn fallback-mode-enabled?
+  "Checks if fallback mode was enabled."
+  [] (Nd4j/isFallbackModeEnabled))
 
 (defn ones
   "Returns an array full of ones based on number(s) given"
@@ -64,12 +83,14 @@
   ([ndarray k] (Nd4j/prod ndarray k)))
 
 (defn rand-array
+  "Create a random ndarray with the given shape using the current time as the seed."
   ([shape] (Nd4j/rand shape))
   ([rows cols] (Nd4j/rand cols))
   ([rows cols seed] (Nd4j/rand cols))
   ([rows cols min max rng] (Nd4j/rand cols min max rng)))
 
 (defn randn-array
+  "Random normal using the current time stamp as the seed"
   ([shape] (Nd4j/randn shape))
   ([rows columns] (Nd4j/randn rows columns))
   ([rows columns rng] (Nd4j/randn rows columns rng)))
@@ -78,36 +99,55 @@
   "Repeats the input array n times to create a new larger array."
   [ndarray n] (Nd4j/repeat ndarray n))
 
-(defn roll-axis 
+(defn roll-axis
+  "Roll the specified axis backwards, until it lies in a given position."
   ([ndarray axis] (Nd4j/rollAxis ndarray axis))
   ([ndarray axis start] (Nd4j/rollAxis ndarray axis start)))
 
-(defn rot [ndarray] (Nd4j/rot ndarray))
+(defn rotate
+ "Reverses the passed in matrix such that m[0] becomes m[m.length - 1] etc."
+ [ndarray] (Nd4j/rot ndarray))
 
-(defn rot-90 [ndarray] (Nd4j/rot90 ndarray))
+(defn rotate-90
+  "Rotate a matrix 90 degrees"
+  [ndarray] (Nd4j/rot90 ndarray))
 
 (defn scalar
+  "Create a scalar ndarray with the specified value and/or offset"
   ([value] (Nd4j/scalar value))
   ([value offset] (Nd4j/scalar value offset)))
 
-(defn sort-array [ndarray dimension ascending] (Nd4j/sort ndarray dimension ascending))
+(defn sort-array
+  "Sort an ndarray along a particular dimension."
+  [ndarray dimension ascending] (Nd4j/sort ndarray dimension ascending))
 
-(defn sort-columns [ndarray row-idx ascending] (Nd4j/sortColumns ndarray row-idx ascending))
+(defn sort-columns
+  "Sort (shuffle) the columns of a 2d array according to the value at a specified row."
+  [ndarray row-idx ascending] (Nd4j/sortColumns ndarray row-idx ascending))
 
-(defn sort-rows [ndarray col-idx ascending] (Nd4j/sortRows ndarray col-idx ascending))
+(defn sort-rows
+  "Sort (shuffle) the rows of a 2d array according to the value at a specified column."
+  [ndarray col-idx ascending] (Nd4j/sortRows ndarray col-idx ascending))
 
-(defn sort-with-indices [ndarray dimension ascending] (Nd4j/sortWithIndices ndarray dimension ascending))
+(defn sort-with-indices
+  "Sort an ndarray along a particular dimension and also return the sorted indices."
+  [ndarray dimension ascending] (Nd4j/sortWithIndices ndarray dimension ascending))
 
 (defn sum
   "[ndarray] Sums all numbers in array even if multiple rows."
   ([ndarray] (Nd4j/sum ndarray))
   ([ndarray dimension] (Nd4j/sum ndarray dimension)))
 
-(defn to-byte-array [ndarray] (Nd4j/toByteArray ndarray))
+(defn to-byte-array
+  "Convert an ndarray to a byte array."
+  [ndarray] (Nd4j/toByteArray ndarray))
 
-(defn to-flatten [ndarrays] (Nd4j/toFlattened ndarrays))
+(defn to-flattened
+  "Create a long row vector of all of the given ndarrays."
+  [ndarrays] (Nd4j/toFlattened ndarrays))
 
 (defn value-array-of
+  "Creates an ndarray with the specified value as the only value in the ndarray."
   ([shape value] (Nd4j/valueArrayOf shape value))
   ([rows columns value] (Nd4j/valueArrayOf rows columns value)))
 
@@ -115,141 +155,209 @@
   ([ndarray] (Nd4j/var ndarray))
   ([ndarray dimension] (Nd4j/var ndarray dimension)))
 
-(defn allows-specify-ordering? []
+(defn allows-specify-ordering?
+  "Backend specific: Returns whether specifying the order for the blas impl is allowed (cblas)."
+  []
   (Nd4j/allowsSpecifyOrdering))
 
-(defn append [arr pad-amount val axis]
+(defn append
+  "Append the given array with the specified value size along a particular axis."
+  [arr pad-amount val axis]
   (Nd4j/append arr pad-amount val axis))
 
 (defn arange
+  "Array of evenly spaced values."
   ([end] (Nd4j/arange end))
   ([begin end] (Nd4j/arange begin end)))
 
 (defn average-and-propagate
+  "This method averages input arrays, and returns averaged array."
   ([arrays] (Nd4j/averageAndPropagate arrays))
   ([target arrays] (Nd4j/averageAndPropagate target arrays)))
 
-(defn bilinear-products [curr in]
+(defn bilinear-products
+  "Returns a column vector where each entry is the nth bilinear product of the nth slices of the two tensors."
+  [curr in]
   (Nd4j/bilinearProducts curr in))
 
-(defn buffer-ref-queue []
+(defn buffer-ref-queue
+  "The reference queue used for cleaning up databuffers."
+  []
   (Nd4j/bufferRefQueue))
 
 (defn choice
+  "This method samples value from Source array to Target, with probabilites provided in Probs argument."
   ([source probs num-samples] (Nd4j/choice source probs num-samples))
   ([source probs num-samples rng] (Nd4j/choice source probs num-samples rng)))
 
-(defn concat-arrays [dimension & args] (Nd4j/concat dimension (into-array args)))
+(defn concat-arrays
+  "Concatenate arrays along a dimension."
+  [dimension & args] (Nd4j/concat dimension (into-array args)))
 
-(defn data-type [] (Nd4j/dataType))
+(defn data-type
+  "Returns the data type used for the runtime."
+  [] (Nd4j/dataType))
 
-(defn empty-like [arr] (Nd4j/emptyLike arr))
+(defn empty-like
+  "Empty like."
+  [arr] (Nd4j/emptyLike arr))
 
-(defn enable-fallback-mode! [really-enable] (Nd4j/enableFallbackMode really-enable))
+(defn enable-fallback-mode!
+  "Enables fallback to safe-mode for specific operations."
+  [really-enable] (Nd4j/enableFallbackMode really-enable))
 
-(defn eye [n] (Nd4j/eye n))
+(defn eye
+  "Create the identity ndarray."
+  [n] (Nd4j/eye n))
 
-(defn factory [] (Nd4j/factory))
+(defn factory
+  "The factory used for creating ndarrays."
+  [] (Nd4j/factory))
 
 (defn get-affinity-manager [] (Nd4j/getAffinityManager))
 
 (defn get-constnat-handler [] (Nd4j/getConstantHandler))
 
-(defn get-convolution [] (Nd4j/getConvolution))
+(defn get-convolution
+  "Get the convolution singleton."
+  [] (Nd4j/getConvolution))
 
 (defn get-data-buffer-factory [] (Nd4j/getDataBufferFactory))
 
-(defn get-distributions [] (Nd4j/getDistributions))
+(defn get-distributions
+  "Get the primary distributions factory."
+  [] (Nd4j/getDistributions))
 
-(defn get-instrumentation [] (Nd4j/getInstrumentation))
+(defn get-instrumentation
+  "Gets the instrumentation instance."
+  [] (Nd4j/getInstrumentation))
 
-(defn get-memory-manager [] (Nd4j/getMemoryManager))
+(defn get-memory-manager
+  "This method returns backend-specific MemoryManager implementation, for low-level memory management."
+  [] (Nd4j/getMemoryManager))
 
 (defn get-ndarray-factory [] (Nd4j/getNDArrayFactory))
 
-(defn get-op-factory [] (Nd4j/getOpFactory))
+(defn get-op-factory
+  "Get the operation factory."
+  [] (Nd4j/getOpFactory))
 
-(defn get-random [] (Nd4j/getRandom))
+(defn get-random-generator
+  "Get the current random generator"
+  [] (Nd4j/getRandom))
 
-(defn get-random-factory [] (Nd4j/getRandomFactory))
+(defn get-random-factory
+  "This method returns RandomFactory instance."
+  [] (Nd4j/getRandomFactory))
 
 (defn get-strides
+  "Get the strides based on the shape and NDArrays.order()"
   ([shape] (Nd4j/getStrides shape))
   ([shape order] (Nd4j/getStrides shape order)))
 
 (defn hstack
+  "Concatenates two matrices horizontally."
   ([arr & args] (Nd4j/hstack (into-array args))))
 
-(defn ones-like [arr] (Nd4j/onesLike arr))
+(defn ones-like
+  "Ones like."
+  [arr] (Nd4j/onesLike arr))
 
 (defn pad
+  "Pad the given ndarray to the size along each dimension."
   ([to-pad pad-width pad-mode] (Nd4j/pad to-pad pad-width pad-mode))
   ([to-pad pad-width constant-values pad-mode]
    (Nd4j/pad to-pad pad-width constant-values pad-mode)))
 
-(defn prepend [arr pad-amount val axis] (Nd4j/prepend arr pad-amount val axis))
+(defn prepend
+  "Append the given array with the specified value size along a particular axis."
+  [arr pad-amount val axis] (Nd4j/prepend arr pad-amount val axis))
 
 (defn pull-rows
+  "This method produces concatenated array, that consist from tensors, fetched from source array, against some dimension and specified indexes."
   ([source source-dim indexes] (Nd4j/pullRows source source-dim indexes))
   ([source source-dim indexes order] (Nd4j/pullRows source source-dim indexes order)))
 
-(defn read-binary [read-file] (Nd4j/readBinary read-file))
+(defn read-binary
+  "Read a binary ndarray from the given file."
+  [read-file] (Nd4j/readBinary read-file))
 
-(defn read-array [input] (Nd4j/read input))
+(defn read-array
+  "Read in an ndarray from a data input stream."
+  [input] (Nd4j/read input))
 
 (defn read-numpy
+  "Create a ndarray by reading in a serialized numpy array."
   ([file-path] (Nd4j/readNumpy file-path))
   ([file-path split] (Nd4j/readNumpy file-path split)))
 
 (defn read-txt
+  "Create a ndarray by reading in a text file."
   ([file-path] (Nd4j/readTxt file-path))
   ([file-path sep] (Nd4j/readTxt file-path sep)))
 
 (defn read-txt-string
+  "Create ndarray by parsing a string."
   ([ndarray] (Nd4j/readTxtString ndarray))
   ([ndarray sep] (Nd4j/readTxtString ndarray sep)))
 
-(defn ref-queue [] (Nd4j/refQueue))
+(defn ref-queue
+  "The reference queue used for cleaning up ndarrays."
+  [] (Nd4j/refQueue))
 
 (defn reverse-array
   "Reverses elements in each row and reverses the order of rows."
   [arr] (Nd4j/reverse arr))
 
-(defn save-binary [arr save-to] (Nd4j/saveBinary arr save-to))
+(defn save-binary
+  "Save an ndarray to the given file."
+  [arr save-to] (Nd4j/saveBinary arr save-to))
 
-(defn scalar
-  ([value] (Nd4j/scalar value))
-  ([value offset] (Nd4j/scalar value offset)))
+(defn set-data-type!
+  "This method sets dataType for the current JVM runtime."
+  [dtype] (Nd4j/setDataType dtype))
 
-(defn set-data-type! [dtype] (Nd4j/setDataType dtype))
-
-(defn shape [arr] 
+(defn shape
+  "Returns the shape of the ndarray."
+  [arr] 
   (into [] (Nd4j/shape arr)))
 
-(defn shuffle-array
+(defn shuffle-array!
+  "Symmetric in place shuffle of an ndarray along a specified set of dimensions."
   ([to-shuffle & args] (Nd4j/shuffle to-shuffle (into-array args))))
 
-(defn size-of-data-type []
+(defn size-of-data-type
+  "This method returns sizeOf(currentDataType), in bytes."
+  []
   (Nd4j/sizeOfDataType))
 
 (defn vstack
+  "Concatenates two matrices vertically."
   ([& args] (Nd4j/vstack (into-array args))))
 
-(defn write [arr output-stream] (Nd4j/write arr output-stream))
+(defn write
+  "Write an ndarray to the specified outputstream."
+  [arr output-stream] (Nd4j/write arr output-stream))
 
-(defn write-numpy [write file-path split] (Nd4j/writeNumpy write file-path split))
+(defn write-numpy
+  "Write ndarray to a file in numpy form."
+  [write file-path split] (Nd4j/writeNumpy write file-path split))
 
-(defn write-txt 
+(defn write-txt
+  "Write ndarray to text file." 
   ([write file-path] (Nd4j/writeTxt write file-path))
   ([write file-path split] (Nd4j/writeTxt write file-path split))
   ([write file-path split precision] (Nd4j/writeTxt write file-path split precision)))
 
 (defn write-txt-string
+  "Write ndarray as a string to an output stream."
   ([write os] (Nd4j/writeTxtString write os))
   ([write os split] (Nd4j/writeTxtString write os split))
   ([write os split precision] (Nd4j/writeTxtString write os split precision)))
 
-(defn zeros-like [arr] (Nd4j/zerosLike arr))
+(defn zeros-like
+  "Zeros like."
+  [arr] (Nd4j/zerosLike arr))
 
 ;;Transform static methods
 (defn abs [ndarray] (Transforms/abs ndarray true))
