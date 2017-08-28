@@ -957,27 +957,27 @@
   "Returns the start of where the ndarray is for the original data buffer"
   [ndarray] (.originalOffset ndarray))
 
-(defn put
+(defn put!
   "Put the elements of the ndarray in to the specified indices."
   ([ndarray indices element] (.put ndarray indices element))
   ([ndarray i j element] (.put ndarray i j element)))
 
-(defn put-column
+(defn put-column!
   "Insert a column in to this array Will throw an exception if this ndarray is not a matrix"
   [ndarray column toput] (.putColumn ndarray column toput))
 
-(defn put-row
+(defn put-row!
   "Insert a row in to this array Will throw an exception if this ndarray is not a matrix"
   [ndarray row toput] (.putRow ndarray row toput))
 
-(defn put-scalar
+(defn put-scalar!
   "Insert a scalar float at the specified index (indices)"
   ([ndarray i value] (.putScalar ndarray i value))
   ([ndarray row col value] (.putScalar ndarray row col value))
   ([ndarray dim0 dim1 dim2 value] (.putScalar ndarray dim0 dim1 dim2 value))
   ([ndarray dim0 dim1 dim2 dim3 value] (.putScalar ndarray dim0 dim1 dim2 dim3 value)))
 
-(defn put-slice
+(defn put-slice!
   "Assigns the given matrix (put) to the specified slice."
   [ndarray slice put] (.putSlice ndarray slice put))
 
