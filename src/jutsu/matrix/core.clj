@@ -42,7 +42,8 @@
 (defn zeros
   "Returns an array full of zeros based on number(s) given"
   ([cols] (Nd4j/zeros cols))
-  ([rows cols] (Nd4j/zeros rows cols)))
+  ([rows cols] (Nd4j/zeros rows cols))
+  ([dim1 dim2 & args] (Nd4j/zeros (int-array (concat [dim1 dim2] args)))))
 
 (defn diag
   "Creates a new matrix where the values of the given vector are the diagonal values of the matrix if a vector is passed in, if a matrix is returns the kth diagonal in the matrix."

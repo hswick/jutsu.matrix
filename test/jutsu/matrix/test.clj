@@ -16,7 +16,8 @@
   (is (jm/equals? (jm/matrix [0 0 0]) (jm/zeros 3)))
   (is (jm/equals? (jm/matrix [[0 0 0]
                               [0 0 0]
-                              [0 0 0]]) (jm/zeros 3 3))))
+                              [0 0 0]]) (jm/zeros 3 3)))
+  (is (= org.nd4j.linalg.cpu.nativecpu.NDArray (class (jm/zeros 5 6 7)))))
 
 (deftest ones
   (is (jm/equals? (jm/matrix [1 1 1]) (jm/ones 3)))
