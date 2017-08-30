@@ -102,7 +102,7 @@ Run `boot test-code` to run your tests
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 Harley Swick
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
