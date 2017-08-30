@@ -85,7 +85,7 @@ because nd4j does not support 0 dimension arrays. This means you can't actually 
 
 The second reason is that nd4j is an interface with implemented and tested backends for both cpu and gpu. Simply, that is all I need to get my job done. Implementing another protocol on top of nd4j is redundant. IMO, using multiple different cpu libraries in one project seems like unnecessary complexity. Thus jutsu.matrix(nd4j) provides all the benefits of a protocol like core.matrix.
 
-The third reason is that a lot of development on projects that implement core.matrix have been done, but at some point they have all run into a dead end. By removing the middle man I have been able to provide full coverage for the nd4j api in a shorter amount of time.
+The third reason is that a lot of development on projects that implement core.matrix has been done. Unfortunately, at some point they have all run into a dead end. By removing the middle man I have been able to provide full coverage for the nd4j api in a shorter amount of time.
 
 Even though following the core.matrix protocol is not a priority, users should find that jutsu.matrix feels very similar.
 
