@@ -10,7 +10,9 @@ This primarily serves as a light wrapper around nd4j linalg module and provides 
 Names of functions can mostly assumed to be similar to the original nd4j library but with clojure naming conventions. This is mostly designed to help work with deeplearning4j with an added side bonus of a fast linear algebra library for clojure
 that works on the CPU and GPU.
 
-98% of the nd4j api has been wrapped, if for some reason you don't see a particular method feel free to submit a PR! :D
+99% of the nd4j api has been wrapped, if for some reason you don't see a particular method feel free to submit a PR! :D
+
+Currently need help with writing tests!
 
 Here is a link to the [full documentation](https://hswick.github.io/jutsu.matrix/jutsu.matrix.core.html)
 
@@ -65,20 +67,7 @@ http://nd4j.org/doc/org/nd4j/linalg/factory/Nd4j.html
 ;;=>[2 4]
 ```
 
-# Why not core.matrix?
-
-jutsu.matrix is inspired by the work of mikera and others on core.matrix. However, my desire to target the dl4j/nd4j ecosystem led me
-astray from core.matrix for a couple of different reasons. The first is that attempts to write a core.matrix implementation never get the entire protocol
-because nd4j does not support 0 dimension arrays. This means you can't actually swap out different implementations when using nd4j as a backend.
-
-The second reason is that nd4j works as a protocol/interface because it has multiple backends for cpu and gpu. For me those are the only backends I need to switch out.
-Personally, using multiple cpu libraries seems like added complexity. This means nd4j provides all the benefits of a protocol like core.matrix. 
-
-Even though following the protocol is not a priority, users should find that they are very similar.
-
-# Neanderthal
-
-Yes, I have heard of neanderthal. jutsu.matrix has different priorities.
+[full documentation](https://hswick.github.io/jutsu.matrix/jutsu.matrix.core.html)
 
 # FYI
 
@@ -88,6 +77,23 @@ of the name to signify such an action was taking place on an NDArray.
 For example reverse is reverse-array, or identity is identity-array.
 
 One exception is concat which is concat-arrays because it works on multiple arrays.
+
+# Why not core.matrix?
+
+jutsu.matrix is inspired by the work of mikera and others on core.matrix. However, my desire to target the dl4j/nd4j ecosystem led me
+astray from core.matrix for a couple of different reasons. The first is that attempts to write a core.matrix implementation never get the entire protocol
+because nd4j does not support 0 dimension arrays. This means you can't actually swap out different implementations when using nd4j as a backend.
+
+The second reason is that nd4j is an interface with implemented and tested backends for both cpu and gpu. Simply, that is all I need to get my job done. Implementing another protocol on top of nd4j is redundant. IMO, using multiple different cpu libraries in one project seems like unnecessary complexity. Thus jutsu.matrix(nd4j) provides all the benefits of a protocol like core.matrix.
+
+The third reason is that a lot of development on projects that implement core.matrix have been done, but at some point they have all run into a dead end. By removing the middle man I have been able to provide full coverage for the nd4j api in a shorter amount of time.
+
+Even though following the core.matrix protocol is not a priority, users should find that jutsu.matrix feels very similar.
+
+# Neanderthal
+
+Yes, I have heard of neanderthal. jutsu.matrix has different priorities.
+
 # Dev
 
 Run `boot night` to startup nightlight and begin editing your project in a browser.
