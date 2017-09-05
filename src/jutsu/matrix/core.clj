@@ -86,9 +86,9 @@
 (defn rand-array
   "Create a random ndarray with the given shape using the current time as the seed."
   ([shape] (Nd4j/rand shape))
-  ([rows cols] (Nd4j/rand cols))
-  ([rows cols seed] (Nd4j/rand cols))
-  ([rows cols min max rng] (Nd4j/rand cols min max rng)))
+  ([rows cols] (Nd4j/rand rows cols))
+  ([rows cols seed] (Nd4j/rand rows cols seed))
+  ([rows cols min max rng] (Nd4j/rand rows cols min max rng)))
 
 (defn randn-array
   "Random normal using the current time stamp as the seed"
