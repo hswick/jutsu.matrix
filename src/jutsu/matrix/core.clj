@@ -1187,6 +1187,9 @@
           (.addi sum row-covar)))         
       (.div sum (first shape))))
 
+(defn get-blas-wrapper []
+  (Nd4j/getBlasWrapper))
+
 (defn svd-decomp
   "Single value decomposition of array, returns a map with keys :singular-values and :eigenvectors-transposed"
   [ndarray]
