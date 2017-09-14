@@ -258,7 +258,7 @@
 
 (defn hstack
   "Concatenates two matrices horizontally."
-  ([arr & args] (Nd4j/hstack (into-array args))))
+  ([& args] (Nd4j/hstack (into-array args))))
 
 (defn ones-like
   "Ones like."

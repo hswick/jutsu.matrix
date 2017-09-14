@@ -47,6 +47,12 @@
   (is (jm/equals? (jm/matrix [[1 2 3 4] [4 3 2 1]])
         (jm/vstack (jm/matrix [1 2 3 4]) (jm/matrix [4 3 2 1])))))
 
+(deftest hstack
+  (is (jm/equals? (jm/matrix [[1 2 3 4 1 5 3 5] [4 3 2 1 6 5 4 3]])
+        (jm/hstack (jm/matrix [[1 2 3 4] [4 3 2 1]]) (jm/matrix [1 5 3 5] [6 5 4 3]))))
+  (is (jm/equals? (jm/matrix [1 2 3 4 4 3 2 1])
+        (jm/hstack (jm/matrix [1 2 3 4]) (jm/matrix [4 3 2 1])))))
+
 (deftest shape
   (is (= [2 4] (jm/shape test-m1))))
 
