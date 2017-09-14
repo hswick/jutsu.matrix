@@ -4,7 +4,7 @@ Use at your own risk! API subject to change.
 
 You can install this library from clojars:
 ```clojure
-[hswick/jutsu.matrix "0.0.11"]
+[hswick/jutsu.matrix "0.0.14"]
 ```
 
 You will also need to include a ND4J backend for your dependencies as jutsu.matrix only wraps the ND4J api.
