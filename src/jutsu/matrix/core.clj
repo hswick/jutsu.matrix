@@ -1186,8 +1186,8 @@
 (defn get-blas-wrapper []
   (Nd4j/getBlasWrapper))
 
-(defn svd-decomp
-  "Single value decomposition of array, returns a map with keys :singular-values and :eigenvectors-transposed"
+(defn sv-decomp
+  "Single value decomposition of array, returns a map with keys :eigenvalues and :right-singular-vectors"
   [ndarray]
   (let [shape (.shape ndarray)
         rows (first shape)
@@ -1196,18 +1196,18 @@
         vt (Nd4j/create cols cols)]
     (.sgesvd (.lapack (Nd4j/getBlasWrapper))
       ndarray s nil vt)
-    {:singular-values s :eigenvectors-transposed vt}))
+    {:eigenvalues s :right-singular-vectors vt}))
 
 (defn pca
   "Returns array compressed by principal component analysis to specified number of dimensions."
   [num-dims ndarray]
   (let [covar (covariance ndarray)
-        svd-comps (svd-decomp covar)
-        factors (->> (map-indexed (fn [i n] [n i]) (:singular-values svd-comps))
+        svd-comps (sv-decomp covar)
+        factors (->> (map-indexed (fn [i n] [n i]) (:eigenvalues svd-comps))
                      (sort-by first)
                      reverse
                      (take num-dims)
-                     (map (fn [[eigenvalue id]] (.getColumn (:eigenvectors-transposed svd-comps) id)))
+                     (map (fn [[eigenvalue id]] (.getColumn (:right-singular-vectors svd-comps) id)))
                      hstack-arrays)]
     (.mmul ndarray factors)))
 
