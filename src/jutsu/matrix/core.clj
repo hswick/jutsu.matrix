@@ -323,10 +323,6 @@
   [arr] 
   (into [] (Nd4j/shape arr)))
 
-(defn shuffle-array!
-  "Symmetric in place shuffle of an ndarray along a specified set of dimensions."
-  ([to-shuffle & args] (Nd4j/shuffle to-shuffle (into-array args))))
-
 (defn size-of-data-type
   "This method returns sizeOf(currentDataType), in bytes."
   []

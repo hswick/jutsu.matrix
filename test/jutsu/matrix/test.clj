@@ -161,4 +161,5 @@
   (is (= (jm/columns (jm/matrix 1 2 3 4)) (jm/num-cols (jm/matrix 1 2 3 4)))))
 
 (deftest squared-sqrt
-  (is (= (jm/matrix 1 4 9 16) (jm/pow (jm/matrix 1 2 3 4) 2))))
+  (is (= (jm/matrix 1 4 9 16) (jm/pow (jm/matrix 1 2 3 4) 2)))
+  (is (= (jm/matrix 1 2 3 4) (jm/sqrt (jm/matrix 1 4 9 16)))))
