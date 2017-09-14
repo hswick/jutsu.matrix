@@ -55,6 +55,7 @@
   (comp
     (codox :name "jutsu.matrix"
       :description "Clojure library for linear algebra operations, wraps ND4J."
-      :version "0.0.11"
+      :version "0.0.14"
       :source-paths #{"src/jutsu/matrix/"}
-      :output-path "docs")))
+      :output-path "docs")
+    (target)))
