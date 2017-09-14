@@ -163,3 +163,9 @@
 (deftest squared-sqrt
   (is (= (jm/matrix 1 4 9 16) (jm/pow (jm/matrix 1 2 3 4) 2)))
   (is (= (jm/matrix 1 2 3 4) (jm/sqrt (jm/matrix 1 4 9 16)))))
+
+(deftest rand-array
+  (is (= [1 10] (jm/shape (jm/rand-array 1 10)))))
+
+(deftest randn-array
+  (is (= [1 10] (jm/shape (jm/randn-array 1 10)))))
