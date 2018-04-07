@@ -66,9 +66,10 @@
   "This method returns BasicNDArrayCompressor instance, suitable for NDArray compression/decompression at runtime."
   [] (Nd4j/getCompressor))
 
-(defn get-fft
-  "Returns the fft instance."
-  [] (Nd4j/getFFt))
+; TODO figure out why this was removed
+;(defn get-fft
+;  "Returns the fft instance."
+;  [] (Nd4j/getFFt))
 
 (defn fallback-mode-enabled?
   "Checks if fallback mode was enabled."
