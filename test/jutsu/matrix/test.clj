@@ -35,7 +35,7 @@
     (is (jm/equals? matrix-2s zeros-2s))))
 
 (deftest to-string
-  (is (= "[1.00, 3.00, 4.00]" (jm/to-string (jm/matrix [1 3 4])))))
+  (is (= "[[    1.0000,    3.0000,    4.0000]]" (jm/to-string (jm/matrix [1 3 4])))))
 
 (deftest concatenation
   (is (jm/equals? (jm/matrix [[1 2 3 4] [4 3 2 1]])
