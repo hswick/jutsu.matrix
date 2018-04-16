@@ -4,18 +4,18 @@ Use at your own risk! API subject to change.
 
 You can install this library from clojars:
 ```clojure
-[hswick/jutsu.matrix "0.0.14"]
+[hswick/jutsu.matrix "0.0.15"]
 ```
 
 You will also need to include a ND4J backend for your dependencies as jutsu.matrix only wraps the ND4J api.
 
 For CPU:
 ```clojure
-[org.nd4j/nd4j-native-platform "0.8.0"]
+[org.nd4j/nd4j-native-platform "1.0.0-alpha"]
 ```
 For GPU: (CUDA must be installed)
 ```clojure
-[org.nd4j/nd4j-cuda-8.0-platform "0.8.0"]
+[org.nd4j/nd4j-cuda-8.0-platform "1.0.0-alpha"]
 ```
 
 This primarily serves as a light wrapper around nd4j linalg module and provides basic linear algebra support to those using ND4J arrays.
