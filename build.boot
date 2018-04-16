@@ -3,8 +3,8 @@
   :dependencies '[[org.clojure/clojure "1.8.0"]
                   [nightlight "1.7.0" :scope "test"]
                   [adzerk/boot-test "1.2.0" :scope "test"]
-                  [org.nd4j/nd4j-native-platform "0.8.0" :scope "test"]
-                  [org.nd4j/nd4j-api "0.8.0"]
+                  [org.nd4j/nd4j-native-platform "1.0.0-alpha" :scope "test"]
+                  [org.nd4j/nd4j-api "1.0.0-alpha"]
                   [boot-codox "0.10.3" :scope "test"]]
   :repositories (conj (get-env :repositories)
                       ["clojars" {:url "https://clojars.org/repo"
@@ -14,7 +14,7 @@
 (task-options!
   jar {:main 'jutsu.matrix.core
        :manifest {"Description" "jutsu.matrix is a linear algebra library meant for the jutsu data science framework"}}
-  pom {:version "0.0.14"
+  pom {:version "0.0.15"
        :project 'hswick/jutsu.matrix
        :description "jutsu.matrix is a linear algebra library meant for the jutsu data science framework"
        :url "https://github.com/hswick/jutsu.matrix"}
@@ -24,6 +24,7 @@
   (comp
     (pom)
     (jar)
+    (install)
     (push)))
 
 ;;So nightlight can still open even if there is an error in the core file
@@ -55,7 +56,7 @@
   (comp
     (codox :name "jutsu.matrix"
       :description "Clojure library for linear algebra operations, wraps ND4J."
-      :version "0.0.14"
+      :version "0.0.15"
       :source-paths #{"src/jutsu/matrix/"}
       :output-path "docs")
     (target)))
