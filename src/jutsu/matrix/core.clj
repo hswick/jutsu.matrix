@@ -295,13 +295,11 @@
 
 (defn read-txt
   "Create a ndarray by reading in a text file."
-  ([file-path] (Nd4j/readTxt file-path))
-  ([file-path sep] (Nd4j/readTxt file-path sep)))
+  ([file-path] (Nd4j/readTxt file-path)))
 
 (defn read-txt-string
   "Create ndarray by parsing a string."
-  ([ndarray] (Nd4j/readTxtString ndarray))
-  ([ndarray sep] (Nd4j/readTxtString ndarray sep)))
+  ([ndarray] (Nd4j/readTxtString ndarray)))
 
 (defn ref-queue
   "The reference queue used for cleaning up ndarrays."
@@ -339,7 +337,7 @@
 
 (defn write-numpy
   "Write ndarray to a file in numpy form."
-  [write file-path split] (Nd4j/writeNumpy write file-path split))
+  [array file-path] (Nd4j/writeAsNumpy array file-path))
 
 (defn write-txt
   "Write ndarray to text file." 
