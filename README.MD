@@ -11,11 +11,11 @@ You will also need to include a ND4J backend for your dependencies as jutsu.matr
 
 For CPU:
 ```clojure
-[org.nd4j/nd4j-native-platform "1.0.0-alpha"]
+[org.nd4j/nd4j-native-platform "1.0.0-beta2"]
 ```
 For GPU: (CUDA must be installed)
 ```clojure
-[org.nd4j/nd4j-cuda-8.0-platform "1.0.0-alpha"]
+[org.nd4j/nd4j-cuda-8.0-platform "1.0.0-beta2"]
 ```
 
 This primarily serves as a light wrapper around nd4j linalg module and provides basic linear algebra support to those using ND4J arrays.
