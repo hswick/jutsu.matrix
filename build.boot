@@ -1,10 +1,10 @@
 (set-env!
   :resource-paths #{"src"}
-  :dependencies '[[org.clojure/clojure "1.8.0"]
+  :dependencies '[[org.clojure/clojure "1.9.0"]
                   [nightlight "1.7.0" :scope "test"]
                   [adzerk/boot-test "1.2.0" :scope "test"]
-                  [org.nd4j/nd4j-native-platform "1.0.0-alpha" :scope "test"]
-                  [org.nd4j/nd4j-api "1.0.0-alpha"]
+                  [org.nd4j/nd4j-native-platform "1.0.0-beta2" :scope "test"]
+                  [org.nd4j/nd4j-api "1.0.0-beta2"]
                   [boot-codox "0.10.3" :scope "test"]]
   :repositories (conj (get-env :repositories)
                       ["clojars" {:url "https://clojars.org/repo"
