@@ -14,7 +14,7 @@
 (task-options!
   jar {:main 'jutsu.matrix.core
        :manifest {"Description" "jutsu.matrix is a linear algebra library meant for the jutsu data science framework"}}
-  pom {:version "0.0.15"
+  pom {:version "0.0.16"
        :project 'hswick/jutsu.matrix
        :description "jutsu.matrix is a linear algebra library meant for the jutsu data science framework"
        :url "https://github.com/hswick/jutsu.matrix"}
